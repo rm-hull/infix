@@ -1,11 +1,11 @@
 # Infix [![Build Status](https://travis-ci.org/rm-hull/infix.svg?branch=master)](http://travis-ci.org/rm-hull/infix)
 A small Clojure/ClojureScript library for representing LISP expressions in infix 
 rather than prefix notation... sometimes it's easier to rely on operator precedence,
-instead of LISP's insistence on parentheses - this is especially true when dealing
+instead of LISP's insistence on parentheses – this is especially true when dealing
 with mathematical equations.
 
 An infix expression is rewritten as a prefix expression using a macro. The operator
-precedences were taken from [Wikipedia](https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages).
+precedence rules were taken from [Wikipedia](https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages).
 Any function calls should have parens around the arguments and not the function name.
 
 ### Pre-requisites
@@ -22,7 +22,7 @@ To build and install the library locally, run:
 
 ### Including in your project
 
-There is version hosted at [Clojars](https://clojars.org/rm-hull/infix).
+There _will be_ a version hosted at [Clojars](https://clojars.org/rm-hull/infix) shortly.
 For leiningen include a dependency:
 
 ```clojure
