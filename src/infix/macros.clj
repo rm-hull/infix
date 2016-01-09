@@ -20,8 +20,7 @@
    'atan 'Math/atan
    'π    'Math/PI
    '√    'Math/sqrt
-   }
-  )
+  })
 
 (def operator-precedence
   ; From https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages
