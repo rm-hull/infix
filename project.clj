@@ -5,8 +5,7 @@
     :name "The MIT License (MIT)"
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [
-    [org.clojure/clojure "1.7.0"]
-    [rm-hull/cljs-test "0.0.8-SNAPSHOT"]]
+    [org.clojure/clojure "1.8.0"]]
   :scm {:url "git@github.com:rm-hull/infix.git"}
   :plugins [
     [codox "0.9.1"] ]
@@ -18,4 +17,8 @@
     :src-dir-uri "http://github.com/rm-hull/infix/blob/master/"
     :src-linenum-anchor-prefix "L" }
   :min-lein-version "2.5.3"
-  :global-vars {*warn-on-reflection* true})
+  :profiles {
+    :dev {
+      :global-vars {*warn-on-reflection* true}
+      :plugins [
+        [lein-cloverage "1.0.6"]]}})

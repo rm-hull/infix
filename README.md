@@ -1,5 +1,6 @@
-# Infix [![Build Status](https://travis-ci.org/rm-hull/infix.svg?branch=master)](http://travis-ci.org/rm-hull/infix)
-A small Clojure/ClojureScript library for representing LISP expressions in infix 
+# Infix [![Build Status](https://travis-ci.org/rm-hull/infix.svg?branch=master)](http://travis-ci.org/rm-hull/infix) [![Coverage Status](https://coveralls.io/repos/rm-hull/infix/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/infix?branch=master)
+
+A small Clojure/ClojureScript library for representing LISP expressions in infix
 rather than prefix notation... sometimes it's easier to rely on operator precedence,
 instead of LISP's insistence on parentheses – this is especially true when dealing
 with mathematical equations.
@@ -10,7 +11,7 @@ Any function calls should have parens around the arguments and not the function 
 
 ### Pre-requisites
 
-You will need [Leiningen](https://github.com/technomancy/leiningen) 2.4.2 or above installed.
+You will need [Leiningen](https://github.com/technomancy/leiningen) 2.5.3 or above installed.
 
 ### Building
 
