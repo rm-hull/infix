@@ -23,11 +23,11 @@ To build and install the library locally, run:
 
 ### Including in your project
 
-There _will be_ a version hosted at [Clojars](https://clojars.org/rm-hull/infix) shortly.
+There is a version hosted at [Clojars](https://clojars.org/rm-hull/infix).
 For leiningen include a dependency:
 
 ```clojure
-[rm-hull/infix "0.0.1-SNAPSHOT"]
+[rm-hull/infix "0.1.0"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
