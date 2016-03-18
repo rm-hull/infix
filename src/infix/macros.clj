@@ -1,32 +1,51 @@
 (ns infix.macros)
 
 (def operator-alias
-  {'&& 'and
-   '|| 'or
-   '==  '=
-   '!=  'not=
-   '%   'mod
-   '<<  'bit-shift-left
-   '>>  'bit-shift-right
-   '!   'not
-   '&   'bit-and
-   '|   'bit-or
-   'sin 'Math/sin
-   'cos 'Math/cos
-   'tan 'Math/tan
-   'sqrt 'Math/sqrt
-   'asin 'Math/asin
-   'acos 'Math/acos
-   'atan 'Math/atan
-   'π    'Math/PI
-   '√    'Math/sqrt
-  })
+  {'&&     'and
+   '||     'or
+   '==     '=
+   '!=     'not=
+   '%      'mod
+   '<<     'bit-shift-left
+   '>>     'bit-shift-right
+   '!      'not
+   '&      'bit-and
+   '|      'bit-or
+   '.      '*
+   'abs    'Math/abs
+   'signum 'Math/signum
+   '**     'Math/pow
+   'sin    'Math/sin
+   'cos    'Math/cos
+   'tan    'Math/tan
+   'asin   'Math/asin
+   'acos   'Math/acos
+   'atan   'Math/atan
+   'sinh   'Math/sinh
+   'cosh   'Math/cosh
+   'tanh   'Math/tanh
+   'exp    'Math/exp
+   'log    'Math/log
+   'e      'Math/E
+   'π      'Math/PI
+   'sqrt   'Math/sqrt
+   '√      'Math/sqrt })
 
 (def operator-precedence
   ; From https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages
   ; Lowest precedence first
-  ['or 'and 'bit-or 'bit-xor 'bit-and 'not= '= '>= '> '<= '<
-   'bit-shift-right 'bit-shift-left '- '+ '/ '* 'not])
+  [
+   ;; binary operators
+   'or 'and 'bit-or 'bit-xor 'bit-and 'not= '= '>= '> '<= '<
+   'bit-shift-right 'bit-shift-left '- '+ '/ '* 'Math/pow
+
+   ;; unary operators
+   'not
+   'Math/sin  'Math/cos  'Math/tan
+   'Math/asin 'Math/acos 'Math/atan
+   'Math/sinh 'Math/cosh 'Math/tanh
+   'Math/sqrt 'Math/exp  'Math/log
+   'Math/abs  'Math/signum ])
 
 (defn- resolve-aliases
   "Attempt to resolve any aliases: if not found just return the original term"

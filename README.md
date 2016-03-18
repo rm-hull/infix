@@ -36,7 +36,7 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>rm-hull</groupId>
   <artifactId>infix</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0</version>
 </dependency>
 ```
 
@@ -53,12 +53,18 @@ For maven-based projects, add the following to your `pom.xml`:
 => 64
 ```
 
-Some `Math` functions have been aliased, so single argument functions can be
+Some `Math` functions have been aliased (see [below](#aliased_functions) for full list), so single argument functions can be
 used as follows:
 
 ```clojure
 (infix √(5 * 5))
 => 5.0
+
+(infix √ 121)
+=> 11.0
+
+(infix 2 ** 6)
+=> 64.0
 
 (def t 0.324)
 => #'user/t
@@ -69,6 +75,40 @@ used as follows:
 (macroexpand-1 '(infix sin(2 * t) + 3 * cos(4 * t))
 => (+ (Math/sin (* 2 t)) (* 3 (Math/cos (* 4 t))))
 ```
+
+### Aliased Operators & Functions
+
+| Alias  | Operator        |
+|--------|-----------------|
+| &&     | and             |
+| ||     | or              |
+| ==     | =               |
+| !=     | not=            |
+| %      | mod             |
+| <<     | bit-shift-left  |
+| >>     | bit-shift-right |
+| !      | not             |
+| &      | bit-and         |
+| |      | bit-or          |
+| .      | *               |
+| abs    | Math/abs        |
+| signum | Math/signum     |
+| **     | Math/pow        |
+| sin    | Math/sin        |
+| cos    | Math/cos        |
+| tan    | Math/tan        |
+| asin   | Math/asin       |
+| acos   | Math/acos       |
+| atan   | Math/atan       |
+| sinh   | Math/sinh       |
+| cosh   | Math/cosh       |
+| tanh   | Math/tanh       |
+| exp    | Math/exp        |
+| log    | Math/log        |
+| e      | Math/E          |
+| π      | Math/PI         |
+| sqrt   | Math/sqrt       |
+| √      | Math/sqrt       |
 
 ## References
 
