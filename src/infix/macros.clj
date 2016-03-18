@@ -69,7 +69,8 @@
     :else
     (loop [ops operator-precedence]
       (if-let [op (first ops)]
-        (let [idx (.indexOf infix-expr op)]
+        (let [infix-expr (resolve-aliases infix-expr)
+              idx        (.indexOf infix-expr op)]
           (if (pos? idx)
             (let [[expr1 [op & expr2]] (split-at idx infix-expr)]
               (list op (rewrite expr1) (rewrite expr2)))

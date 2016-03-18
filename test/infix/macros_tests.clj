@@ -14,6 +14,9 @@
   (let [t 0.324]
     (is (> ε (Math/abs (- (infix sin(2 * t) + 3 * cos(4 * t)) 1.4176457261295824))))))
 
+(deftest check-nested-aliasing
+  (is (= 729.0 (infix abs(3 ** 6)))))
+
 (deftest check-unary-precedence
   (let [x 4
         y 3 ]
