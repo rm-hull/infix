@@ -1,4 +1,5 @@
-# Infix [![Build Status](https://travis-ci.org/rm-hull/infix.svg?branch=master)](http://travis-ci.org/rm-hull/infix) [![Coverage Status](https://coveralls.io/repos/rm-hull/infix/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/infix?branch=master) [![Dependencies Status](https://jarkeeper.com/rm-hull/infix/status.svg)](https://jarkeeper.com/rm-hull/infix) [![Downloads](https://jarkeeper.com/rm-hull/infix/downloads.svg)](https://jarkeeper.com/rm-hull/infix)
+# Infix [![Build Status](https://travis-ci.org/rm-hull/infix.svg?branch=master)](http://travis-ci.org/rm-hull/infix) [![Coverage Status](https://coveralls.io/repos/rm-hull/infix/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/infix?branch=master) [![Dependencies Status](https://jarkeeper.com/rm-hull/infix/status.svg)](https://jarkeeper.com/rm-hull/infix) [![Downloads](https://jarkeeper.com/rm-hull/infix/downloads.svg)](https://jarkeeper.com/rm-hull/infix) [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/infix.svg)](https://clojars.org/rm-hull/infix)
+
 
 A small Clojure/ClojureScript library for representing LISP expressions in infix
 rather than prefix notation... sometimes it's easier to rely on operator precedence,
@@ -7,7 +8,8 @@ with mathematical equations.
 
 An infix expression is rewritten as a prefix expression using a macro. The operator
 precedence rules were taken from [Wikipedia](https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages).
-Any function calls should have parens around the arguments and not the function name.
+Any function calls should _generally_ have parens around the arguments and not the function name. Aliased unary operators
+(as outlined below) do not need parens however.
 
 ### Pre-requisites
 
