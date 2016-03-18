@@ -27,7 +27,7 @@ There is a version hosted at [Clojars](https://clojars.org/rm-hull/infix).
 For leiningen include a dependency:
 
 ```clojure
-[rm-hull/infix "0.1.0"]
+[rm-hull/infix "0.1.1"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -36,7 +36,7 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>rm-hull</groupId>
   <artifactId>infix</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
 </dependency>
 ```
 
