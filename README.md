@@ -53,7 +53,7 @@ For maven-based projects, add the following to your `pom.xml`:
 => 64
 ```
 
-Some `Math` functions have been aliased (see [below](#aliased_functions) for full list), so single argument functions can be
+Some `Math` functions have been aliased (see [below](#aliased-operators--functions) for full list), so single argument functions can be
 used as follows:
 
 ```clojure
@@ -78,37 +78,18 @@ used as follows:
 
 ### Aliased Operators & Functions
 
-| Alias  | Operator        |
-|--------|-----------------|
-| &&     | and             |
-| ||     | or              |
-| ==     | =               |
-| !=     | not=            |
-| %      | mod             |
-| <<     | bit-shift-left  |
-| >>     | bit-shift-right |
-| !      | not             |
-| &      | bit-and         |
-| |      | bit-or          |
-| .      | *               |
-| abs    | Math/abs        |
-| signum | Math/signum     |
-| **     | Math/pow        |
-| sin    | Math/sin        |
-| cos    | Math/cos        |
-| tan    | Math/tan        |
-| asin   | Math/asin       |
-| acos   | Math/acos       |
-| atan   | Math/atan       |
-| sinh   | Math/sinh       |
-| cosh   | Math/cosh       |
-| tanh   | Math/tanh       |
-| exp    | Math/exp        |
-| log    | Math/log        |
-| e      | Math/E          |
-| π      | Math/PI         |
-| sqrt   | Math/sqrt       |
-| √      | Math/sqrt       |
+| Alias  | Operator        |   | Alias  | Operator        |   | Alias  | Operator        |
+|--------|-----------------|---|--------|-----------------|---|--------|-----------------|
+| &&     | and             |   | abs    | Math/abs        |   | sin    | Math/sin        |
+| \|\|   | or              |   | signum | Math/signum     |   | cos    | Math/cos        |
+| ==     | =               |   | **     | Math/pow        |   | tan    | Math/tan        |
+| !=     | not=            |   | exp    | Math/exp        |   | asin   | Math/asin       |
+| %      | mod             |   | log    | Math/log        |   | acos   | Math/acos       |
+| <<     | bit-shift-left  |   | e      | Math/E          |   | atan   | Math/atan       |
+| >>     | bit-shift-right |   | π      | Math/PI         |   | sinh   | Math/sinh       |
+| !      | not             |   | sqrt   | Math/sqrt       |   | cosh   | Math/cosh       |
+| &      | bit-and         |   | √      | Math/sqrt       |   | tanh   | Math/tanh       |
+| \|     | bit-or          |   | .      | *               |   |        |                 |
 
 ## References
 
