@@ -8,7 +8,8 @@ with mathematical equations.
 
 An infix expression is rewritten as a prefix expression using a macro. The operator
 precedence rules were taken from [Wikipedia](https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages).
-Any function calls should have parens around the arguments and not the function name.
+Any function calls should _generally_ have parens around the arguments and not the function name. Aliased unary operators
+(as outlined below) do not need parens however.
 
 ### Pre-requisites
 
