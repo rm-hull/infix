@@ -63,4 +63,13 @@
 
 (deftest check-list
   (is (nil? (parse-all (list-of digits) " ")))
+  (is (nil? (parse-all (list-of digits) "")))
+  (is (= ["1"] (parse-all (list-of digits) "1")))
   (is (= ["1", "1", "2", "3", "5"] (parse-all (list-of digits) "1,1,2,3,5"))))
+
+(deftest check-function
+  (let [env {:x 81 :* *, :sqrt (fn [x] (Math/sqrt x))}]
+    (is (= 9.0 ((parse-all function "sqrt x") env)))
+    (is (= 5.0 ((parse-all function "sqrt(25)") env)))
+    (is (= 7.0 ((parse-all function "sqrt(7*7)") env)))
+    (is (thrown? clojure.lang.ArityException ((parse-all function "sqrt(7, 5)") env)))))
