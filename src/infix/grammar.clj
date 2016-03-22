@@ -31,7 +31,7 @@
 ; mulop ::= "*" | "/".
 ;
 ; function ::= envref expression | envref "(" expression { "," expression } ")".
-; ref ::= letter { letter | digit | "-" | "_" }.
+; envref ::= letter { letter | digit | "-" | "_" }.
 ; var ::= envref.
 ; number ::= integer | decimal | rational
 ; integer :: = [ "-" ] digits.
