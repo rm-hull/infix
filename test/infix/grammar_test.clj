@@ -27,12 +27,18 @@
     [infix.grammar :refer :all]
     [infix.parser :refer [parse-all]]))
 
+(defn float=
+  ([x y] (float= x y 0.00001))
+  ([x y epsilon]
+     (let [scale (if (or (zero? x) (zero? y)) 1 (Math/abs x))]
+       (<= (Math/abs (- x y)) (* scale epsilon)))))
+
 (deftest check-var
   (let [env { :x 32 :something-else 19}]
     (is (nil? (parse-all var "54")))
     (is (= 32 ((parse-all var "x") env)))
     (is (= 19 ((parse-all var "something-else") env)))
-    (is (thrown? Exception ((parse-all var "fred") env)))))
+    (is (thrown? IllegalStateException ((parse-all var "fred") env)))))
 
 (deftest check-integer
   (is (nil? (parse-all integer "f")))
@@ -72,4 +78,30 @@
     (is (= 9.0 ((parse-all function "sqrt x") env)))
     (is (= 5.0 ((parse-all function "sqrt(25)") env)))
     (is (= 7.0 ((parse-all function "sqrt(7*7)") env)))
+    (is (thrown? IllegalStateException ((parse-all function "bargle(7)") env)))
     (is (thrown? clojure.lang.ArityException ((parse-all function "sqrt(7, 5)") env)))))
+
+(deftest check-expression
+  (let [env (merge base-env {:t 0.324})]
+    (is (float= 1.4176457261295824 ((parse-all expression "sin(2 * t) + 3 * cos(4 * t)") env)))
+    (is (thrown? IllegalStateException ((parse-all expression "3 + 4") {})))
+    (is (= 43 ((parse-all expression "3 + 5 * 8") env)))
+    (is (= 64 ((parse-all expression "(3 + 5) * 8") env)))))
+
+
+(deftest check-baseenv-functions
+  (is (= 16 ((parse-all expression "9 + 7") base-env)))
+  (is (= 12 ((parse-all expression "19 - 7") base-env)))
+  (is (= 63 ((parse-all expression "9 * 7") base-env)))
+  (is (= 19/75 ((parse-all expression "19 / 75") base-env)))
+  (is (float= (Math/pow 2.53 3.1) ((parse-all expression "pow(2.53, 3.1)") base-env)))
+  (is (float= (Math/pow 7.01 1.9) ((parse-all expression "7.01 ** 1.9") base-env)))
+  (is (float= (Math/abs -9.213) ((parse-all expression "abs(-9.213)") base-env)))
+  (is (float= (Math/signum -9.213) ((parse-all expression "signum(-9.213)") base-env)))
+  (is (float= (Math/sqrt 24353) ((parse-all expression "sqrt(24353)") base-env)))
+  (is (float= (Math/exp 93) ((parse-all expression "exp(93)") base-env)))
+  (is (float= (Math/log 23.1) ((parse-all expression "log(23.1)") base-env)))
+  (is (float= (Math/sin 1.91) ((parse-all expression "sin(1.91)") base-env)))
+  (is (float= (Math/cos 2.791) ((parse-all expression "cos(2.791)") base-env)))
+  (is (float= (Math/tan 44.3) ((parse-all expression "tan(44.3)") base-env)))
+  )

@@ -22,7 +22,8 @@
 
 (ns infix.grammar
   (:require
-    [infix.parser :refer :all]))
+    [infix.parser :refer :all]
+    [infix.math :as m]))
 
 ; expression ::= term { addop term }.
 ; term ::= factor { mulop factor }.
@@ -60,7 +61,7 @@
              (fn [env]
                (if (contains? env kw)
                  (get env kw)
-                 (throw (Exception.
+                 (throw (IllegalStateException.
                           (str (name kw) " is not bound in environment")))))))))
 
 (def var envref)
@@ -135,17 +136,19 @@
     number
     function))
 
-(def mulop
+(defn binary-op [& ops]
   (do*
-    (op <- (any-of (match "*") (match "/") (match ".") (string "**")))
-    (return (fn [env]
-              (get env (keyword (str op)))))))
+    (op <- (reduce or-else (map string ops)))
+    (return
+      (let [kw (keyword (str op))]
+        (fn [env]
+          (if (contains? env kw)
+            (get env kw)
+            (throw (IllegalStateException.
+                     (str (name kw) " is not bound in environment")))))))))
 
-(def addop
-  (do*
-    (op <- (any-of (match "+") (match "-")))
-    (return (fn [env]
-              (get env (keyword (str op)))))))
+(def mulop (binary-op "*" "/" "**" "%"))
+(def addop (binary-op "+" "-"))
 
 (def term
   (or-else
@@ -173,16 +176,19 @@
         (fn [env]
           ((op env) (t1 env) (t2 env)))))))
 
-(def base-env {
-  :+ +
-  :- -
-  :* *
-  :. *
-  :/ /
-  :% mod
-  :** (fn [a b] (Math/pow a b))
-  :pow (fn [a b] (Math/pow a b))
-  :sqrt (fn [n] (Math/sqrt n))
-  :e  Math/E
-  :pi  Math/PI
-})
+(def base-env
+  (merge
+    ; wrapped java.lang.Math constants & functions
+    (->>
+      (ns-publics 'infix.math)
+      (map (fn [[k v]] (vector (keyword k) v)))
+      (into {}))
+
+    ; Basic ops
+    {
+      :+ +
+      :- -
+      :* *
+      :/ /
+      :% mod
+    }))
