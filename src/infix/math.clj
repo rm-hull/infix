@@ -63,6 +63,25 @@
 (def π Math/PI)
 (def pi Math/PI)
 
+(def product *)
+(def sum +)
+
+(defn root [a b]
+  (pow b (/ 1 a)))
+
+(defn gcd [a b]
+  (if (zero? b)
+    a
+    (recur b (rem a b))))
+
+(defn lcm [a b]
+  (/ (* a b) (gcd a b)))
+
+(defn factorial [n]
+  (if (zero? n)
+    1
+    (apply * (range 1 (inc n)))))
+
 ;; Additional trig functions not found in JDK java.lang.Math
 (defn sec
   "compute secant, given the angle in radians"

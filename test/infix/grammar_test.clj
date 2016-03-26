@@ -99,6 +99,7 @@
   (is (float= (Math/abs -9.213) ((parse-all expression "abs(-9.213)") base-env)))
   (is (float= (Math/signum -9.213) ((parse-all expression "signum(-9.213)") base-env)))
   (is (float= (Math/sqrt 24353) ((parse-all expression "sqrt(24353)") base-env)))
+  (is (float= 3 ((parse-all expression "root(3, 27)") base-env)))
   (is (float= (Math/exp 93) ((parse-all expression "exp(93)") base-env)))
   (is (float= (Math/log 23.1) ((parse-all expression "log(23.1)") base-env)))
   (is (float= (Math/sin 1.91) ((parse-all expression "sin(1.91)") base-env)))
@@ -117,4 +118,12 @@
   (is (float= (Math/acos (/ 1 3)) ((parse-all expression "asec(3.0)") base-env)))
   (is (float= (Math/asin (/ 1 33)) ((parse-all expression "acsc(33)") base-env)))
   (is (float= (Math/atan (/ 1 0.21)) ((parse-all expression "acot(0.21)") base-env)))
+  (is (float= (+ 1 2 5.7 4) ((parse-all expression "sum(1, 2, 5.7, 4)") base-env)))
+  (is (float= (* 1 2 5.7 4) ((parse-all expression "product(1, 2, 5.7, 4)") base-env)))
+  (is (= 1 ((parse-all expression "factorial 0") base-env)))
+  (is (= 120 ((parse-all expression "factorial 5") base-env)))
+  (is (= 4 ((parse-all expression "gcd(8, 12)") base-env)))
+  (is (= 24 ((parse-all expression "lcm(8, 12)") base-env)))
+
   )
+
