@@ -29,7 +29,7 @@ There is a version hosted at [Clojars](https://clojars.org/rm-hull/infix).
 For leiningen include a dependency:
 
 ```clojure
-[rm-hull/infix "0.1.2"]
+[rm-hull/infix "0.2.0"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -38,21 +38,21 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>rm-hull</groupId>
   <artifactId>infix</artifactId>
-  <version>0.1.2</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 
 ## Basic Usage
 
 ```clojure
-(refer 'infix.macros :only '[infix])
-=> nil
+(refer 'infix.macros :only '[infix from-string])
+; => nil
 
 (infix 3 + 5 * 8)
-=> 43
+; => 43
 
 (infix (3 + 5) * 8)
-=> 64
+; => 64
 ```
 
 Some `Math` functions have been aliased (see [below](#aliased-operators--functions) for full list), so single argument functions can be
@@ -60,38 +60,89 @@ used as follows:
 
 ```clojure
 (infix √(5 * 5))
-=> 5.0
+; => 5.0
 
 (infix √ 121)
-=> 11.0
+; => 11.0
 
 (infix 2 ** 6)
-=> 64.0
+; => 64.0
 
 (def t 0.324)
-=> #'user/t
+; => #'user/t
 
 (infix sin(2 * t) + 3 * cos(4 * t))
-=> 1.4176457261295824
+; => 1.4176457261295824
 
 (macroexpand-1 '(infix sin(2 * t) + 3 * cos(4 * t))
-=> (+ (Math/sin (* 2 t)) (* 3 (Math/cos (* 4 t))))
+; => (+ (Math/sin (* 2 t)) (* 3 (Math/cos (* 4 t))))
 ```
+
+### Evaluating infix expressions from a string
+
+A function can created at runtime from an expression held in a string as
+follows. When building from a string, a number of binding arguments should be
+supplied, corresponding to any variable that may be used in the string
+expression, for example:
+
+```clojure
+(def hypot (from-string "sqrt(x**2 + y**2)" x y))
+; => #'user/hypot
+
+(hypot 3 4)
+; => 5
+```
+
+In effect, this is equivalent to creating the  following function:
+
+```clojure
+(defn hypot [x y]
+  (infix sqrt(x ** 2 + y ** 2)))
+```
+
+However, it does so with recourse to `eval` and `read-string` - instead it is
+built using a custom infix parser-combinator with a restricted base environment
+of math functions, as outlined in the next section.
+
+Functions may be passed where they are not in the base environment, e.g.:
+
+```clojure
+(defn rad
+  "Calculate the radians for the supplied degrees"
+  [deg]
+  (infix deg * π / 180))
+; => user/rad
+
+(def rhs-triangle-height
+  (from-string "tan(rad(angle)) * base" base angle rad)
+; => user/rhs-triangle-height
+
+(rhs-triangle-height 10 45 rad)
+; => 9.9999999999998
+```
+
+> **TODO:** allow base env to be extended and passed in, possibly
+> along the lines of `with-redefs`.
 
 ### Aliased Operators & Functions
 
-| Alias  | Operator        |   | Alias  | Operator        |   | Alias  | Operator        |
-|--------|-----------------|---|--------|-----------------|---|--------|-----------------|
-| &&     | and             |   | abs    | Math/abs        |   | sin    | Math/sin        |
-| \|\|   | or              |   | signum | Math/signum     |   | cos    | Math/cos        |
-| ==     | =               |   | **     | Math/pow        |   | tan    | Math/tan        |
-| !=     | not=            |   | exp    | Math/exp        |   | asin   | Math/asin       |
-| %      | mod             |   | log    | Math/log        |   | acos   | Math/acos       |
-| <<     | bit-shift-left  |   | e      | Math/E          |   | atan   | Math/atan       |
-| >>     | bit-shift-right |   | π      | Math/PI         |   | sinh   | Math/sinh       |
-| !      | not             |   | sqrt   | Math/sqrt       |   | cosh   | Math/cosh       |
-| &      | bit-and         |   | √      | Math/sqrt       |   | tanh   | Math/tanh       |
-| \|     | bit-or          |   | .      | *               |   |        |                 |
+| Alias  | Operator               |   | Alias  | Operator        |   | Alias  | Operator        |
+|--------|------------------------|---|--------|-----------------|---|--------|-----------------|
+| &&     | and                    |   | abs    | Math/abs        |   | sin    | Math/sin        |
+| \|\|   | or                     |   | signum | Math/signum     |   | cos    | Math/cos        |
+| ==     | =                      |   | **     | Math/pow        |   | tan    | Math/tan        |
+| !=     | not=                   |   | exp    | Math/exp        |   | asin   | Math/asin       |
+| %      | mod                    |   | log    | Math/log        |   | acos   | Math/acos       |
+| <<     | bit-shift-left         |   | e      | Math/E          |   | atan   | Math/atan       |
+| >>     | bit-shift-right        |   | π      | Math/PI         |   | sinh   | Math/sinh       |
+| !      | not                    |   | sqrt   | Math/sqrt       |   | cosh   | Math/cosh       |
+| &      | bit-and                |   | √      | Math/sqrt       |   | tanh   | Math/tanh       |
+| \|     | bit-or                 |   | root   | b √ a           |   | sec    | Secant          |
+|        |                        |   | φ      | Golden ratio    |   | csc    | Cosecant        |
+| gcd    | Greatest common divsor |   | fact   | Factorial       |   | cot    | Cotangent       |
+| lcm    | Least common multiple  |   | ∑      | Sum             |   | asec   | Arcsecant       |
+|        |                        |   | ∏      | Product         |   | acsc   | Arccosecant     |
+|        |                        |   |        |                 |   | acot   | Arccotangent    |
 
 ## References
 

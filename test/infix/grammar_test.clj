@@ -25,7 +25,8 @@
   (:require
     [clojure.test :refer :all]
     [infix.grammar :refer :all]
-    [infix.parser :refer [parse-all]]))
+    [infix.parser :refer [parse-all]]
+    [infix.macros :refer [base-env]]))
 
 (defn float=
   ([x y] (float= x y 0.00001))
@@ -120,10 +121,8 @@
   (is (float= (Math/atan (/ 1 0.21)) ((parse-all expression "acot(0.21)") base-env)))
   (is (float= (+ 1 2 5.7 4) ((parse-all expression "sum(1, 2, 5.7, 4)") base-env)))
   (is (float= (* 1 2 5.7 4) ((parse-all expression "product(1, 2, 5.7, 4)") base-env)))
-  (is (= 1 ((parse-all expression "factorial 0") base-env)))
-  (is (= 120 ((parse-all expression "factorial 5") base-env)))
+  (is (= 1 ((parse-all expression "fact 0") base-env)))
+  (is (= 120 ((parse-all expression "fact 5") base-env)))
   (is (= 4 ((parse-all expression "gcd(8, 12)") base-env)))
-  (is (= 24 ((parse-all expression "lcm(8, 12)") base-env)))
-
-  )
+  (is (= 24 ((parse-all expression "lcm(8, 12)") base-env))))
 

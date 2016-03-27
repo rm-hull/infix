@@ -44,6 +44,7 @@
 
 (def digit (from-re #"[0-9]"))
 
+; TODO: allow unicode/utf8 characters
 (def letter (from-re #"[a-zA-Z]"))
 
 (def alpha-num (any-of letter digit (match "_") (match "-")))
@@ -175,20 +176,3 @@
       (return
         (fn [env]
           ((op env) (t1 env) (t2 env)))))))
-
-(def base-env
-  (merge
-    ; wrapped java.lang.Math constants & functions
-    (->>
-      (ns-publics 'infix.math)
-      (map (fn [[k v]] (vector (keyword k) v)))
-      (into {}))
-
-    ; Basic ops
-    {
-      :+ +
-      :- -
-      :* *
-      :/ /
-      :% mod
-    }))

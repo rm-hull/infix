@@ -22,8 +22,9 @@
 
 
 (ns infix.macros-tests
-  (:use [clojure.test]
-        [infix.macros]))
+  (:require
+    [clojure.test :refer :all]
+    [infix.macros :refer [infix from-string]]))
 
 (def ε 0.0000001)
 
@@ -52,3 +53,12 @@
         y 3 ]
     (is (= 12   (infix x . y)))
     (is (= 64.0 (infix x ** y)))))
+
+(deftest check-from-string
+  (is (= 7 ((from-string "x + 3" x) 4)))
+  (is (thrown-with-msg? java.text.ParseException #"Failed to parse expression: 'x \+ '"
+                        ((from-string "x + ") 3)))
+  (is (thrown-with-msg? clojure.lang.ArityException #"Wrong number of args \(2\) passed to: .*"
+                        ((from-string "x + 3") 2 3)))
+  (is (thrown-with-msg? IllegalStateException #"x is not bound in environment"
+                        ((from-string "x + 3")))))

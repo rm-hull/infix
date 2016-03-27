@@ -21,7 +21,11 @@
 ;; SOFTWARE.
 
 
-(ns infix.macros)
+(ns infix.macros
+  (:require
+    [infix.parser :refer [parse-all]]
+    [infix.grammar :refer [expression]]
+    [infix.math :as m]))
 
 (def operator-alias
   {'&&     'and
@@ -47,12 +51,27 @@
    'sinh   'Math/sinh
    'cosh   'Math/cosh
    'tanh   'Math/tanh
+   'sec    'm/sec
+   'csc    'm/csc
+   'cot    'm/cot
+   'asec   'm/asec
+   'acsc   'm/acsc
+   'acot   'm/acot
    'exp    'Math/exp
    'log    'Math/log
    'e      'Math/E
    'π      'Math/PI
+   'φ      'm/φ
    'sqrt   'Math/sqrt
-   '√      'Math/sqrt })
+   '√      'Math/sqrt
+   'root   'm/root
+   'gcd    'm/gcd
+   'lcm    'm/lcm
+   'fact   'm/fact
+   'sum    'm/sum
+   '∑      'm/sum
+   'product 'm/product
+   '∏      'm/product })
 
 (def operator-precedence
   ; From https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages
@@ -107,3 +126,28 @@
    infix expressions into standard LISP prefix expressions."
   [& expr]
   (-> expr resolve-aliases rewrite))
+
+(def base-env
+  (merge
+    ; wrapped java.lang.Math constants & functions
+    (->>
+      (ns-publics 'infix.math)
+      (map (fn [[k v]] (vector (keyword k) v)))
+      (into {}))
+
+    ; Basic ops
+    {
+      :+ +
+      :- -
+      :* *
+      :/ /
+      :% mod
+    }))
+
+(defmacro from-string [expr & bindings]
+  `(if-let [f# (parse-all expression ~expr)]
+    (with-meta
+      (fn [~@bindings]
+        (f# ~(into base-env (map #(vector (keyword %) %) bindings))))
+      {:doc ~expr})
+    (throw (java.text.ParseException. (str "Failed to parse expression: '" ~expr "'") 0))))

@@ -20,9 +20,7 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns infix.math
-  (:require
-    [infix.macros :refer [infix]]))
+(ns infix.math)
 
 (defmacro ^:private defunary [func-name & [alias]]
   (let [arg (gensym "x__")]
@@ -58,7 +56,7 @@
 (defbinary pow)
 (defbinary pow **)
 
-(def φ (infix (1 + √ 5) / 2))
+(def φ (/ (inc (√ 5)) 2))
 (def e Math/E)
 (def π Math/PI)
 (def pi Math/PI)
@@ -77,7 +75,7 @@
 (defn lcm [a b]
   (/ (* a b) (gcd a b)))
 
-(defn factorial [n]
+(defn fact [n]
   (if (zero? n)
     1
     (apply * (range 1 (inc n)))))
