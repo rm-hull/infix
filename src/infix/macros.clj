@@ -144,10 +144,29 @@
       :% mod
     }))
 
-(defmacro from-string [expr & bindings]
-  `(if-let [f# (parse-all expression ~expr)]
-    (with-meta
-      (fn [~@bindings]
-        (f# ~(into base-env (map #(vector (keyword %) %) bindings))))
-      {:doc ~expr})
-    (throw (java.text.ParseException. (str "Failed to parse expression: '" ~expr "'") 0))))
+(defn- binding-vars [bindings]
+  (->>
+    bindings
+    (map #(vector (keyword %) (gensym "arg_")))
+    (into {})))
+
+(defmacro from-string
+  ([expr]
+   `(from-string [] ~expr))
+
+  ([bindings expr]
+   `(from-string ~bindings ~base-env ~expr))
+
+  ([bindings env expr]
+    (cond
+      (not (vector? bindings))
+      (throw (IllegalArgumentException. (str "Binding variables is not a vector")))
+
+      :else
+      (let [b# (binding-vars bindings)]
+        `(if-let [f# (parse-all expression ~expr)]
+          (with-meta
+            (fn [~@(vals b#)]
+              (f# (merge ~env ~b#)))
+            {:doc ~expr})
+        (throw (java.text.ParseException. (str "Failed to parse expression: '" ~expr "'") 0)))))))

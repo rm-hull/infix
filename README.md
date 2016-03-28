@@ -29,7 +29,7 @@ There is a version hosted at [Clojars](https://clojars.org/rm-hull/infix).
 For leiningen include a dependency:
 
 ```clojure
-[rm-hull/infix "0.2.0"]
+[rm-hull/infix "0.2.1"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -38,14 +38,14 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>rm-hull</groupId>
   <artifactId>infix</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
 </dependency>
 ```
 
 ## Basic Usage
 
 ```clojure
-(refer 'infix.macros :only '[infix from-string])
+(refer 'infix.macros :only '[infix from-string base-env])
 ; => nil
 
 (infix 3 + 5 * 8)
@@ -78,7 +78,7 @@ used as follows:
 ; => (+ (Math/sin (* 2 t)) (* 3 (Math/cos (* 4 t))))
 ```
 
-### Evaluating infix expressions from a string
+### Evaluating infix expressions dynamically from a string
 
 A function can created at runtime from an expression held in a string as
 follows. When building from a string, a number of binding arguments should be
@@ -86,43 +86,68 @@ supplied, corresponding to any variable that may be used in the string
 expression, for example:
 
 ```clojure
-(def hypot (from-string "sqrt(x**2 + y**2)" x y))
+(def hypot
+  (from-string [x y]
+    "sqrt(x**2 + y**2)"))
 ; => #'user/hypot
 
 (hypot 3 4)
 ; => 5
 ```
 
-In effect, this is equivalent to creating the  following function:
+`from-string` is deliberately designed to _look_ like an anonymous function
+definition, mainly because that is more-or-less what it is. In effect, this is
+equivalent to creating the  following function:
 
 ```clojure
-(defn hypot [x y]
-  (infix sqrt(x ** 2 + y ** 2)))
+(def hypot
+  (fn [x y]
+    (infix sqrt(x ** 2 + y ** 2))))
 ```
 
-However, it does so with recourse to `eval` and `read-string` - instead it is
-built using a custom infix parser-combinator with a restricted base environment
-of math functions, as outlined in the next section.
+However, it does so without recourse to `eval` and `read-string` - instead it is built using our
+[old](https://github.com/rm-hull/ods-search-appliance/blob/master/src/odessa/parser.clj)
+[friend](https://github.com/rm-hull/wam/blob/master/src/wam/parser.clj), the
+monadic parser-combinator, with an EBNF grammar (implementing the infix notation)
+and a restricted base environment of math functions, as outlined in the next
+section.
 
-Functions may be passed where they are not in the base environment, e.g.:
+The `base-env` may be extended with any number of key/value pairs (where keys
+are keywords) and values may either be values or functions, to provide
+the required extensions. When referenced in the string it is **not** necessary
+to prefix the name with a colon.
 
 ```clojure
-(defn rad
-  "Calculate the radians for the supplied degrees"
-  [deg]
-  (infix deg * π / 180))
-; => user/rad
+(def extended-env
+  (merge
+    base-env
+    {:rad (fn [deg] (infix deg * π / 180))
+     :hypot hypot}))
+; => user/extended-env
 
 (def rhs-triangle-height
-  (from-string "tan(rad(angle)) * base" base angle rad)
+  (from-string [base angle]
+    extended-env
+    "tan(rad(angle)) * base"))
 ; => user/rhs-triangle-height
 
-(rhs-triangle-height 10 45 rad)
+(rhs-triangle-height 10 45)
 ; => 9.9999999999998
 ```
 
-> **TODO:** allow base env to be extended and passed in, possibly
-> along the lines of `with-redefs`.
+Obviously, a function that was previously created from a string can also
+referenced in a subsequent function definition:
+
+```clojure
+(def hypot2
+  (from-string [x y]
+    extended-env
+    "hypot(x, y) ** 2"))
+; => user/hypot2
+
+(hypot2 5 12)
+; => 169.0
+```
 
 ### Aliased Operators & Functions
 
@@ -143,6 +168,10 @@ Functions may be passed where they are not in the base environment, e.g.:
 | lcm    | Least common multiple  |   | ∑      | Sum             |   | asec   | Arcsecant       |
 |        |                        |   | ∏      | Product         |   | acsc   | Arccosecant     |
 |        |                        |   |        |                 |   | acot   | Arccotangent    |
+
+## EBNF Grammar Rules
+
+> TODO - needs documenting
 
 ## References
 
