@@ -65,3 +65,8 @@
                         ((from-string [x] "x + 3") 2 3)))
   (is (thrown-with-msg? IllegalStateException #"x is not bound in environment"
                         ((from-string "x + 3")))))
+
+(deftest check-math-namespace-aliases
+  (is (= 1.813477718829676 (infix csc(32))))
+  (is (= -1.5298856564663974 (infix sec(4)))))
+

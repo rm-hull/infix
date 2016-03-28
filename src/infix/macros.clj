@@ -24,8 +24,7 @@
 (ns infix.macros
   (:require
     [infix.parser :refer [parse-all]]
-    [infix.grammar :refer [expression]]
-    [infix.math :as m]))
+    [infix.grammar :refer [expression]]))
 
 (def operator-alias
   {'&&     'and
@@ -51,27 +50,27 @@
    'sinh   'Math/sinh
    'cosh   'Math/cosh
    'tanh   'Math/tanh
-   'sec    'm/sec
-   'csc    'm/csc
-   'cot    'm/cot
-   'asec   'm/asec
-   'acsc   'm/acsc
-   'acot   'm/acot
+   'sec    'infix.math/sec
+   'csc    'infix.math/csc
+   'cot    'infix.math/cot
+   'asec   'infix.math/asec
+   'acsc   'infix.math/acsc
+   'acot   'infix.math/acot
    'exp    'Math/exp
    'log    'Math/log
    'e      'Math/E
    'π      'Math/PI
-   'φ      'm/φ
+   'φ      'infix.math/φ
    'sqrt   'Math/sqrt
    '√      'Math/sqrt
-   'root   'm/root
-   'gcd    'm/gcd
-   'lcm    'm/lcm
-   'fact   'm/fact
-   'sum    'm/sum
-   '∑      'm/sum
-   'product 'm/product
-   '∏      'm/product })
+   'root   'infix.math/root
+   'gcd    'infix.math/gcd
+   'lcm    'infix.math/lcm
+   'fact   'infix.math/fact
+   'sum    'infix.math/sum
+   '∑      'infix.math/sum
+   'product 'infix.math/product
+   '∏      'infix.math/product })
 
 (def operator-precedence
   ; From https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages
