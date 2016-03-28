@@ -88,10 +88,13 @@
    'Math/sqrt 'Math/exp  'Math/log
    'Math/abs  'Math/signum ])
 
+(defn- resolve-alias [op]
+  (get operator-alias op op))
+
 (defn- resolve-aliases
   "Attempt to resolve any aliases: if not found just return the original term"
   [expr]
-  (map #(get operator-alias % %) expr))
+  (map resolve-alias expr))
 
 (defn- rewrite
   "Recursively rewrites the infix-expr as a prefix expression, according to
@@ -99,7 +102,7 @@
   [infix-expr]
   (cond
     (not (seq? infix-expr))
-    infix-expr
+    (resolve-alias infix-expr)
 
     (and (seq? (first infix-expr)) (= (count infix-expr) 1))
     (rewrite (first infix-expr))

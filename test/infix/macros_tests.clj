@@ -42,15 +42,13 @@
   (is (= 729.0 (infix abs(3 ** 6)))))
 
 (deftest check-unary-precedence
-  (let [x 4
-        y 3 ]
+  (let [x 4 y 3]
     (is (= 2.0  (infix √ x)))
     (is (= 5.0  (infix √ x + y)))
     (is (= -1.0 (infix cos π)))))
 
 (deftest check-binary-precedence
-  (let [x 4
-        y 3 ]
+  (let [x 4 y 3]
     (is (= 12   (infix x . y)))
     (is (= 64.0 (infix x ** y)))))
 
@@ -70,3 +68,6 @@
   (is (= 1.813477718829676 (infix csc(32))))
   (is (= -1.5298856564663974 (infix sec(4)))))
 
+(deftest check-alias-expansion
+  (let [x 4 y 3]
+    (is (= 0.389947492069644965 (infix exp(sin x + cos y) - sin(exp(x + y)))))))
