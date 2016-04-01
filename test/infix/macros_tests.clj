@@ -31,7 +31,8 @@
 (deftest basic-arithmetic
   (is (= (+ 3 4) (infix 3 + 4)))
   (is (= 43 (infix 3 + 5 * 8)))
-  (is (= 64 (infix (3 + 5) * 8))))
+  (is (= 64 (infix (3 + 5) * 8)))
+  (is (= 0 (infix 3 - 2 - 1))))
 
 (deftest check-aliasing
   (is (= 5.0 (infix √(5 * 5))))
