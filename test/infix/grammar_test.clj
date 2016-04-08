@@ -26,7 +26,7 @@
     [clojure.test :refer :all]
     [infix.grammar :refer :all]
     [infix.parser :refer [parse-all]]
-    [infix.macros :refer [base-env]]))
+    [infix.core :refer [base-env]]))
 
 (defn float=
   ([x y] (float= x y 0.00001))
