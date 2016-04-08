@@ -34,7 +34,9 @@
 ; function ::= envref expression | envref "(" expression { "," expression } ")".
 ; envref ::= letter { letter | digit | "-" | "_" }.
 ; var ::= envref.
-; number ::= integer | decimal | rational
+; number ::= integer | decimal | rational | binary | hex
+; binary :: = [ "-" ] "0b" { "0" | "1" }.
+; hex :: = [ "-" ] "0x" | "#" { "0" | ... | "9" | "A" | ... | "F" | "a" | ... | "f" }.
 ; integer :: = [ "-" ] digits.
 ; decimal :: = [ "-" ] digits "." digits.
 ; rational :: = integer "/" digits.
@@ -67,18 +69,38 @@
 
 (def var envref)
 
+(def binary
+  (do*
+    (sign <- (optional (match "-")))
+    (string "0b")
+    (value <- (do*
+                (text <- (plus (from-re #"[01]")))
+                (return (apply str text))))
+    (return (constantly (Long/parseLong (str sign value) 2)))))
+
+(def hex
+  (do*
+    (sign <- (optional (match "-")))
+    (any-of
+      (match "#")
+      (string "0x"))
+    (value <- (do*
+                (text <- (plus (from-re #"[0-9A-Fa-f]")))
+                (return (apply str text))))
+    (return (constantly (Long/parseLong (str sign value) 16)))))
+
 (def integer
   (do*
     (sign <- (optional (match "-")))
     (value <- digits)
-    (return (constantly (Integer/parseInt (str sign value))))))
+    (return (constantly (Long/parseLong (str sign value))))))
 
 (def rational
   (do*
     (dividend <- integer)
     (match "/")
     (divisor <- digits)
-    (return (constantly (/ (dividend) (Integer/parseInt divisor))))))
+    (return (constantly (/ (dividend) (Long/parseLong divisor))))))
 
 (def decimal
   (do*
@@ -89,7 +111,7 @@
     (return (constantly (Double/parseDouble (str sign i p d))))))
 
 (def number
-  (any-of integer decimal rational))
+  (any-of integer decimal rational binary hex))
 
 (defn list-of [parser]
   (do*

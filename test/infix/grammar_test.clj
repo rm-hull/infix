@@ -45,13 +45,33 @@
   (is (nil? (parse-all integer "f")))
   (is (nil? (parse-all integer "1/2")))
   (is (nil? (parse-all integer "1.2")))
+  (is (nil? (parse-all integer "0b01011")))
+  (is (nil? (parse-all integer "0xDEADCAFE")))
   (is (= 17 ((parse-all integer "17"))))
-  (is (= -17 ((parse-all integer "-17")))))
+  (is (= -17 ((parse-all integer "-17"))))
+  (is (= 443243242444234217 ((parse-all integer "443243242444234217")))))
+
+(deftest check-binary
+  (is (nil? (parse-all binary "f")))
+  (is (nil? (parse-all binary "1/2")))
+  (is (nil? (parse-all binary "1.2")))
+  (is (= 27 ((parse-all binary "0b011011"))))
+  (is (= -27 ((parse-all binary "-0b011011"))))
+  (is (= 4334871515 ((parse-all binary "0b100000010011000001110001111011011")))))
+
+(deftest check-hex
+  (is (nil? (parse-all hex "f")))
+  (is (nil? (parse-all hex "1/2")))
+  (is (nil? (parse-all hex "1.2")))
+  (is (= 3405691582 ((parse-all hex "0xCAFEBABE"))))
+  (is (= 3735928559 ((parse-all hex "#DEADBEEF")))))
 
 (deftest check-rational
   (is (nil? (parse-all rational "f")))
   (is (nil? (parse-all rational "12")))
   (is (nil? (parse-all rational "1.2")))
+  (is (nil? (parse-all rational "0b01011")))
+  (is (nil? (parse-all rational "0xDEADCAFE")))
   (is (= 1/7 ((parse-all rational "1/7"))))
   (is (= -1/7 ((parse-all rational "-1/7")))))
 
@@ -59,6 +79,8 @@
   (is (nil? (parse-all decimal "f")))
   (is (nil? (parse-all decimal "12")))
   (is (nil? (parse-all decimal "1/2")))
+  (is (nil? (parse-all decimal "0b01011")))
+  (is (nil? (parse-all decimal "0xDEADCAFE")))
   (is (= 1.7 ((parse-all decimal "1.7"))))
   (is (= -1.7 ((parse-all decimal "-1.7")))))
 
@@ -66,7 +88,9 @@
   (is (nil? (parse-all number "f")))
   (is (= 1/12 ((parse-all number "6/72"))))
   (is (= 17 ((parse-all number "17"))))
-  (is (= -1.7 ((parse-all number "-1.7")))))
+  (is (= -1.7 ((parse-all number "-1.7"))))
+  (is (= 240 ((parse-all number "0b11110000"))))
+  (is (= 65534 ((parse-all number "#FFFE")))))
 
 (deftest check-list
   (is (nil? (parse-all (list-of digits) " ")))
