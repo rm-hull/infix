@@ -31,10 +31,15 @@
 (deftest basic-arithmetic
   (is (= (+ 3 4) (infix 3 + 4)))
   (is (= 43 (infix 3 + 5 * 8)))
-  (is (= 64 (infix (3 + 5) * 8))))
+  (is (= 64 (infix (3 + 5) * 8)))
+  (is (= 0 (infix (3 - 2) - 1)))
+  (is (= 0 (infix 3 - 2 - 1)))
+  (is (= 5 (infix 3 + 2 % 3)))
+  (is (= 2 (infix (3 + 2) % 3))))
 
 (deftest check-aliasing
   (is (= 5.0 (infix √(5 * 5))))
+  (is (= 2 (infix 5 % 3)))
   (let [t 0.324]
     (is (> ε (Math/abs (- (infix sin(2 * t) + 3 * cos(4 * t)) 1.4176457261295824))))))
 
@@ -53,10 +58,14 @@
     (is (= 64.0 (infix x ** y)))))
 
 (deftest check-from-string
+  (is (= 5 ((from-string "5"))))
+  (is (= 10 ((from-string "5 * 2"))))
   (is (= 7 ((from-string "5 + 2"))))
   (is (= 7 ((from-string [x] "x + 3") 4)))
   (is (= 1 ((from-string [x] {:+ -} "x + 3") 4)))
   (is (= 7 ((from-string [] {:x 6 :+ +} "x + 1"))))
+  (is (= 0 ((from-string "(3-2)-1"))))
+  (is (= 0 ((from-string "3 - 2 - 1"))))
   (is (thrown-with-msg? java.text.ParseException #"Failed to parse expression: 'x \+ '"
                         ((from-string [x] "x + ") 3)))
   (is (thrown-with-msg? clojure.lang.ArityException #"Wrong number of args \(2\) passed to: .*"

@@ -151,28 +151,23 @@
 (def mulop (binary-op "*" "/" "**" "%"))
 (def addop (binary-op "+" "-"))
 
-(def term
-  (or-else
-    factor
-    (do*
-      (f1 <- factor)
-      spaces
-      (op <- mulop)
-      spaces
-      (f2 <- term)
-      (return
-        (fn [env]
-          ((op env) (f1 env) (f2 env)))))))
+(defn- binary-reducer [op-parser arg-parser]
+  (do*
+    (a1 <- arg-parser)
+    (rst <- (many
+              (do*
+                spaces
+                (op <- op-parser)
+                spaces
+                (a2 <- arg-parser)
+                (return [op a2]))))
+    (return
+      (fn [env]
+        (reduce
+          (fn [acc [op a2]] ((op env) acc (a2 env)))
+          (a1 env)
+          rst)))))
 
-(def expression
-  (or-else
-    term
-    (do*
-      (t1 <- term)
-      spaces
-      (op <- addop)
-      spaces
-      (t2 <- expression)
-      (return
-        (fn [env]
-          ((op env) (t1 env) (t2 env)))))))
+(def term (binary-reducer mulop factor))
+
+(def expression (binary-reducer addop term))
