@@ -32,6 +32,7 @@
   (is (= (+ 3 4) (infix 3 + 4)))
   (is (= 43 (infix 3 + 5 * 8)))
   (is (= 64 (infix (3 + 5) * 8)))
+  (is (= 0 (infix (3 - 2) - 1)))
   (is (= 0 (infix 3 - 2 - 1))))
 
 (deftest check-aliasing
@@ -58,6 +59,8 @@
   (is (= 7 ((from-string [x] "x + 3") 4)))
   (is (= 1 ((from-string [x] {:+ -} "x + 3") 4)))
   (is (= 7 ((from-string [] {:x 6 :+ +} "x + 1"))))
+  (is (= 0 ((from-string "(3-2)-1"))))
+  (is (= 0 ((from-string "3 - 2 - 1"))))
   (is (thrown-with-msg? java.text.ParseException #"Failed to parse expression: 'x \+ '"
                         ((from-string [x] "x + ") 3)))
   (is (thrown-with-msg? clojure.lang.ArityException #"Wrong number of args \(2\) passed to: .*"

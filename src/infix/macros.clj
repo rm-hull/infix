@@ -114,7 +114,7 @@
     (loop [ops operator-precedence]
       (if-let [op (first ops)]
         (let [infix-expr (resolve-aliases infix-expr)
-              idx        (.indexOf ^java.util.List infix-expr op)]
+              idx        (.lastIndexOf ^java.util.List infix-expr op)]
           (if (pos? idx)
             (let [[expr1 [op & expr2]] (split-at idx infix-expr)]
               (list op (rewrite expr1) (rewrite expr2)))

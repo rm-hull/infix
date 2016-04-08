@@ -155,11 +155,11 @@
   (or-else
     factor
     (do*
-      (f1 <- factor)
+      (f1 <- term)
       spaces
       (op <- mulop)
       spaces
-      (f2 <- term)
+      (f2 <- factor)
       (return
         (fn [env]
           ((op env) (f1 env) (f2 env)))))))
@@ -168,11 +168,11 @@
   (or-else
     term
     (do*
-      (t1 <- term)
+      (t1 <- expression)
       spaces
       (op <- addop)
       spaces
-      (t2 <- expression)
+      (t2 <- term)
       (return
         (fn [env]
           ((op env) (t1 env) (t2 env)))))))
