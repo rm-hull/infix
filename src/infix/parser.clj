@@ -131,3 +131,10 @@
 (defn string [s]
   (reduce and-then (map #(match (str %)) s)))
 
+(defmacro fwd
+  "Delays the evaluation of a parser that was forward (declare)d and
+   it has not been defined yet. For use in (def)s of no-arg parsers,
+   since the parser expression evaluates immediately."
+  [p]
+  (let [x (gensym)]
+    `(fn [~x] (~p ~x))))
