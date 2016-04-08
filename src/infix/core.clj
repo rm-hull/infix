@@ -24,7 +24,7 @@
 (ns infix.core
   (:require [infix.math]))
 
-(def operator-alias
+(def ^:dynamic operator-alias
   {'&&     'and
    '||     'or
    '==     '=
