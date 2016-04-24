@@ -67,6 +67,10 @@
   (is (= 44525 ((from-string [t] "(t*(t>>5|t>>8))>>(t>>16)") 3425)))
   (is (= 0 ((from-string "(3-2)-1"))))
   (is (= 0 ((from-string "3 - 2 - 1"))))
+  (is (= 5 ((from-string [t] "t - 2") 7)))
+  (is (= 5 ((from-string [t] "t-2") 7)))
+  (is (= 5 ((from-string [t] "t- 2") 7)))
+  (is (= 5 ((from-string [t] "t+2") 3)))
   (is (thrown-with-msg? java.text.ParseException #"Failed to parse expression: 'x \+ '"
                         ((from-string [x] "x + ") 3)))
   (is (thrown-with-msg? clojure.lang.ArityException #"Wrong number of args \(2\) passed to: .*"
