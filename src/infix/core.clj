@@ -20,9 +20,10 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-
 (ns infix.core
-  (:require [infix.math]))
+  (:require
+    [infix.math]
+    [infix.bit-shuffling]))
 
 (def ^:dynamic operator-alias
   {'&&     'and
@@ -32,6 +33,7 @@
    '%      'mod
    '<<     'bit-shift-left
    '>>     'bit-shift-right
+   '>>>    'unsigned-bit-shift-right
    '!      'not
    '&      'bit-and
    '|      'bit-or
@@ -76,7 +78,8 @@
   [
    ;; binary operators
    'or 'and 'bit-or 'bit-xor 'bit-and 'not= '= '>= '> '<= '<
-   'bit-shift-right 'bit-shift-left '- '+ '/ '* 'Math/pow 'mod
+   'unsigned-bit-shift-right 'bit-shift-right 'bit-shift-left
+   '- '+ '/ '* 'Math/pow 'mod
 
    ;; unary operators
    'not
@@ -125,7 +128,8 @@
   (merge
     ; wrapped java.lang.Math constants & functions
     (->>
-      (ns-publics 'infix.math)
+      ['infix.math 'infix.bit-shuffling]
+      (mapcat ns-publics)
       (map (fn [[k v]] (vector (keyword k) v)))
       (into {}))
 

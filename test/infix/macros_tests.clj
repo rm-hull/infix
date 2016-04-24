@@ -64,6 +64,7 @@
   (is (= 7 ((from-string [x] "x + 3") 4)))
   (is (= 1 ((from-string [x] {:+ -} "x + 3") 4)))
   (is (= 7 ((from-string [] {:x 6 :+ +} "x + 1"))))
+  (is (= 44525 ((from-string [t] "(t*(t>>5|t>>8))>>(t>>16)") 3425)))
   (is (= 0 ((from-string "(3-2)-1"))))
   (is (= 0 ((from-string "3 - 2 - 1"))))
   (is (thrown-with-msg? java.text.ParseException #"Failed to parse expression: 'x \+ '"
