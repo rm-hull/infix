@@ -20,7 +20,6 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-
 (ns infix.macros-tests
   (:require
     [clojure.test :refer :all]
@@ -64,7 +63,7 @@
   (is (= 7 ((from-string [x] "x + 3") 4)))
   (is (= 1 ((from-string [x] {:+ -} "x + 3") 4)))
   (is (= 7 ((from-string [] {:x 6 :+ +} "x + 1"))))
-  (is (= 44525 ((from-string [t] "(t*(t>>5|t>>8))>>(t>>16)") 3425)))
+  (is (= 380175 ((from-string [t] "(t*(t>>5|t>>8))>>(t>>16)") 3425)))
   (is (= 0 ((from-string "(3-2)-1"))))
   (is (= 0 ((from-string "3 - 2 - 1"))))
   (is (= 5 ((from-string [t] "t - 2") 7)))
@@ -85,3 +84,9 @@
 (deftest check-alias-expansion
   (let [x 4 y 3]
     (is (= 0.389947492069644965 (infix exp(sin x + cos y) - sin(exp(x + y)))))))
+
+(deftest check-equivalence
+  (let [f (from-string [t] "t>>5 | t>>8")]
+    (doseq [t (repeatedly 50 #(rand-int 1000000))]
+      (is (= (f t) (infix (t >> 5 | t >> 8)))
+          (str "Incorrect evaluation for t=" t)))))
