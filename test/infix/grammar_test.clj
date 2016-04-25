@@ -20,7 +20,6 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-
 (ns infix.grammar-test
   (:require
     [clojure.test :refer :all]
@@ -35,10 +34,10 @@
        (<= (Math/abs (- x y)) (* scale epsilon)))))
 
 (deftest check-var
-  (let [env { :x 32 :something-else 19}]
+  (let [env { :x 32 :something_else 19}]
     (is (nil? (parse-all var "54")))
     (is (= 32 ((parse-all var "x") env)))
-    (is (= 19 ((parse-all var "something-else") env)))
+    (is (= 19 ((parse-all var "something_else") env)))
     (is (thrown? IllegalStateException ((parse-all var "fred") env)))))
 
 (deftest check-integer

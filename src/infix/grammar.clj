@@ -49,7 +49,7 @@
 ; TODO: allow unicode/utf8 characters
 (def letter (from-re #"[a-zA-Z]"))
 
-(def alpha-num (any-of letter digit (match "_") (match "-")))
+(def alpha-num (any-of letter digit (match "_")))
 
 (def digits
   (do*
