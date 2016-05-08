@@ -93,30 +93,30 @@
 (defn sec
   "compute secant, given the angle in radians"
   [θ]
-  (/ 1.0 (Math/cos θ)))
+  (÷ 1 (Math/cos θ)))
 
 (defn csc
   "compute cosecant, given the angle in radians"
   [θ]
-  (/ 1.0 (Math/sin θ)))
+  (÷ 1 (Math/sin θ)))
 
 (defn cot
   "compute cotangent, given the angle in radians"
   [θ]
-  (/ 1.0 (Math/tan θ)))
+  (÷ 1 (Math/tan θ)))
 
 (defn asec
   "compute arcsecant, given the number, returns the arcsecant in radians"
   [value]
-  (Math/acos (/ 1.0 value)))
+  (Math/acos (÷ 1 value)))
 
 (defn acsc
   "compute arccosecant, given the number, returns the arccosecant in radians"
   [value]
-  (Math/asin (/ 1.0 value)))
+  (Math/asin (÷ 1 value)))
 
 (defn acot
   "compute arccotangent, given the number, returns the arccotangent in radians"
   [value]
-  (Math/atan (/ 1.0 value)))
+  (Math/atan (÷ 1 value)))
 
