@@ -63,6 +63,7 @@
    'φ      'infix.math/φ
    'sqrt   'Math/sqrt
    '√      'Math/sqrt
+   '÷      'infix.math/divide
    'root   'infix.math/root
    'gcd    'infix.math/gcd
    'lcm    'infix.math/lcm
@@ -79,7 +80,7 @@
    ;; binary operators
    'or 'and 'bit-or 'bit-xor 'bit-and 'not= '= '>= '> '<= '<
    'unsigned-bit-shift-right 'bit-shift-right 'bit-shift-left
-   '- '+ '/ '* 'Math/pow 'mod
+   '- '+ '/ 'infix.math/divide '* 'Math/pow 'mod
 
    ;; unary operators
    'not

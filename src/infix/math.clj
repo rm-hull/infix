@@ -64,6 +64,15 @@
 (def product *)
 (def sum +)
 
+(defn divide [a b]
+  (if (zero? b)
+    (if (neg? a)
+      Double/NEGATIVE_INFINITY
+      Double/POSITIVE_INFINITY)
+    (/ a b)))
+
+(def ÷ divide)
+
 (defn root [a b]
   (pow b (/ 1 a)))
 
