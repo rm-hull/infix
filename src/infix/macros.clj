@@ -49,7 +49,7 @@
   ([bindings env expr]
     (cond
       (not (vector? bindings))
-      (throw (IllegalArgumentException. (str "Binding variables is not a vector")))
+      (throw (IllegalArgumentException. "Binding variables is not a vector"))
 
       :else
       (let [b# (binding-vars bindings)]

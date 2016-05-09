@@ -73,6 +73,8 @@
   (is (= 380175 ((from-string [t] "(t*(t>>5|t>>8))>>(t>>16)") 3425)))
   (is (= 0 ((from-string "(3-2)-1"))))
   (is (= 0 ((from-string "3 - 2 - 1"))))
+  (is (= Double/POSITIVE_INFINITY ((from-string "divide(3, 0)"))))
+  (is (= Double/NEGATIVE_INFINITY ((from-string "-3 ÷ 0"))))
   (is (= 5 ((from-string [t] "t - 2") 7)))
   (is (= 5 ((from-string [t] "t-2") 7)))
   (is (= 5 ((from-string [t] "t- 2") 7)))
