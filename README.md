@@ -183,7 +183,7 @@ referenced in a subsequent function definition:
 
 ## EBNF Grammar Rules
 
-> TODO - needs documenting
+> TODO - needs documenting - see issue [#15](https://github.com/rm-hull/infix/issues/15)
 
 ## References
 
