@@ -55,8 +55,8 @@ For maven-based projects, add the following to your `pom.xml`:
 ; => 64
 ```
 
-Some `Math` functions have been aliased (see [below](#aliased-operators--functions) for full list), so single argument functions can be
-used as follows:
+Some `Math` functions have been aliased (see [below](#aliased-operators--functions)
+for full list), so nullary and unary-argument functions can be used as follows:
 
 ```clojure
 (infix √(5 * 5))
@@ -74,6 +74,18 @@ used as follows:
 (infix sin(2 * t) + 3 * cos(4 * t))
 ; => 1.4176457261295824
 
+(infix rand() * 3)
+; => 0.5544039436207262
+```
+
+#### Debugging
+
+It may be the case that you encounter some esoteric errors emitted from the
+library trying to rephrase expressions from infix to prefix. Use
+`macroexpand-1` to show how the expression would be rewritten, and if necessary
+file an [issue](https://github.com/rm-hull/infix/issues/new).
+
+```clojure
 (macroexpand-1 '(infix sin(2 * t) + 3 * cos(4 * t))
 ; => (+ (Math/sin (* 2 t)) (* 3 (Math/cos (* 4 t))))
 ```
@@ -151,23 +163,23 @@ referenced in a subsequent function definition:
 
 ### Aliased Operators & Functions
 
-| Alias  | Operator               |   | Alias  | Operator        |   | Alias  | Operator        |
-|--------|------------------------|---|--------|-----------------|---|--------|-----------------|
-| &&     | and                    |   | abs    | Math/abs        |   | sin    | Math/sin        |
-| \|\|   | or                     |   | signum | Math/signum     |   | cos    | Math/cos        |
-| ==     | =                      |   | **     | Math/pow        |   | tan    | Math/tan        |
-| !=     | not=                   |   | exp    | Math/exp        |   | asin   | Math/asin       |
-| %      | mod                    |   | log    | Math/log        |   | acos   | Math/acos       |
-| <<     | bit-shift-left         |   | e      | Math/E          |   | atan   | Math/atan       |
-| >>     | bit-shift-right        |   | π      | Math/PI         |   | sinh   | Math/sinh       |
-| !      | not                    |   | sqrt   | Math/sqrt       |   | cosh   | Math/cosh       |
-| &      | bit-and                |   | √      | Math/sqrt       |   | tanh   | Math/tanh       |
-| \|     | bit-or                 |   | root   | b √ a           |   | sec    | Secant          |
-|        |                        |   | φ      | Golden ratio    |   | csc    | Cosecant        |
-| gcd    | Greatest common divsor |   | fact   | Factorial       |   | cot    | Cotangent       |
-| lcm    | Least common multiple  |   | ∑      | Sum             |   | asec   | Arcsecant       |
-|        |                        |   | ∏      | Product         |   | acsc   | Arccosecant     |
-|        |                        |   |        |                 |   | acot   | Arccotangent    |
+| Alias   | Operator                |   | Alias  | Operator        |   | Alias  | Operator        |
+|---------|-------------------------|---|--------|-----------------|---|--------|-----------------|
+| &&      | and                     |   | abs    | Math/abs        |   | sin    | Math/sin        |
+| \|\|    | or                      |   | signum | Math/signum     |   | cos    | Math/cos        |
+| ==      | =                       |   | **     | Math/pow        |   | tan    | Math/tan        |
+| !=      | not=                    |   | exp    | Math/exp        |   | asin   | Math/asin       |
+| %       | mod                     |   | log    | Math/log        |   | acos   | Math/acos       |
+| <<      | bit-shift-left          |   | e      | Math/E          |   | atan   | Math/atan       |
+| >>      | bit-shift-right         |   | π      | Math/PI         |   | sinh   | Math/sinh       |
+| !       | not                     |   | sqrt   | Math/sqrt       |   | cosh   | Math/cosh       |
+| &       | bit-and                 |   | √      | Math/sqrt       |   | tanh   | Math/tanh       |
+| \|      | bit-or                  |   | root   | b √ a           |   | sec    | Secant          |
+|         |                         |   | φ      | Golden ratio    |   | csc    | Cosecant        |
+| gcd     | Greatest common divsor  |   | fact   | Factorial       |   | cot    | Cotangent       |
+| lcm     | Least common multiple   |   | ∑      | Sum             |   | asec   | Arcsecant       |
+| rand    | Random number generator |   | ∏      | Product         |   | acsc   | Arccosecant     |
+| randInt | Random int between 0..n |   |        |                 |   | acot   | Arccotangent    |
 
 ## EBNF Grammar Rules
 

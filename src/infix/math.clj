@@ -20,7 +20,8 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns infix.math)
+(ns infix.math
+  (:refer-clojure :exclude [rand]))
 
 (defmacro ^:private defunary [func-name & [alias]]
   (let [arg (gensym "x__")]
@@ -63,6 +64,8 @@
 
 (def product *)
 (def sum +)
+(def rand clojure.core/rand)
+(def randInt clojure.core/rand-int)
 
 (defn divide [a b]
   (if (zero? b)

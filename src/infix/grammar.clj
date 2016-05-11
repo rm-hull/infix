@@ -138,7 +138,7 @@
       (f <- envref)
       (match "(")
       spaces
-      (args <- (list-of expression))
+      (args <- (or-else (list-of expression) (return nil)))
       spaces
       (match ")")
       (return (fn [env]

@@ -98,6 +98,10 @@
   [expr]
   (map resolve-alias expr))
 
+(defn- empty-arglist? [xs]
+  (let [elem (fnext xs)]
+    (and (seq? elem) (empty? elem))))
+
 (defn rewrite
   "Recursively rewrites the infix-expr as a prefix expression, according to
    the operator precedence rules"
@@ -121,9 +125,10 @@
             (let [[expr1 [op & expr2]] (split-at idx infix-expr)]
               (list op (rewrite expr1) (rewrite expr2)))
             (recur (next ops))))
-        (list
-          (rewrite (first infix-expr))
-          (rewrite (rest infix-expr)))))))
+
+        (if (empty-arglist? infix-expr)
+          (list (rewrite (first infix-expr)))
+          (list (rewrite (first infix-expr)) (rewrite (next infix-expr))))))))
 
 (def base-env
   (merge
