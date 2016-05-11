@@ -50,7 +50,7 @@
         g #(infix 7 + 21)]
     (is (= 14 (infix f() + 4)))
     (is (= 7  (infix g() / 4)))
-    (is (true? (< 0 (infix rand() * 3) 3)))))
+    (is (true? (<= 0 (infix rand() * 3) 3)))))
 
 (deftest check-unary-precedence
   (let [x 4 y 3]
@@ -80,8 +80,8 @@
   (is (= 5 ((from-string [t] "t- 2") 7)))
   (is (= 5 ((from-string [t] "t+2") 3)))
   (is (= 5 ((from-string [f] "f() + 2") (fn [] 3))))
-  (is (true? (< 0 ((from-string "rand() * 10")) 10)))
-  (is (true? (< 0 ((from-string "randInt(10)")) 10)))
+  (is (true? (<= 0 ((from-string "rand() * 10")) 10)))
+  (is (true? (<= 0 ((from-string "randInt(10)")) 10)))
   (is (thrown-with-msg? java.text.ParseException #"Failed to parse expression: 'x \+ '"
                         ((from-string [x] "x + ") 3)))
   (is (thrown-with-msg? clojure.lang.ArityException #"Wrong number of args \(2\) passed to: .*"
