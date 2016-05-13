@@ -88,6 +88,7 @@
   (is (= 3.1415926535897932 ((from-string "pi"))))
   (is (= 2.718281828459045 ((from-string "e"))))
   (is (= 15 ((from-string [e] "e * 3") 5)))
+  (is (= 19624.068163608234 ((from-string [e] "e ** (3 + pi)") 5)))
   (is (= 384.2880400203104 ((from-string [x] "product(e, pi, 3 * 3, x)") 5)))
   (is (thrown-with-msg? java.text.ParseException #"Failed to parse expression: 'x \+ '"
                         ((from-string [x] "x + ") 3)))
