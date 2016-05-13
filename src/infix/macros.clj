@@ -23,7 +23,7 @@
 
 (ns infix.macros
   (:require
-    [infix.core :refer [rewrite resolve-aliases base-env]]
+    [infix.core :refer [rewrite resolve-alias base-env]]
     [infix.parser :refer [parse-all]]
     [infix.grammar :refer [expression]]))
 
@@ -31,7 +31,10 @@
   "Takes an infix expression, resolves an aliases before rewriting the
    infix expressions into standard LISP prefix expressions."
   [& expr]
-  (-> expr resolve-aliases rewrite))
+  (->>
+    expr
+    (map resolve-alias)
+    rewrite))
 
 (defn- binding-vars [bindings]
   (->>

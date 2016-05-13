@@ -90,13 +90,17 @@
    'Math/sqrt 'Math/exp  'Math/log
    'Math/abs  'Math/signum ])
 
-(defn- resolve-alias [op]
-  (get operator-alias op op))
+(defn- bounded? [sym]
+  (if-let [v (resolve sym)]
+    (bound? v)
+    false))
 
-(defn resolve-aliases
+(defn resolve-alias
   "Attempt to resolve any aliases: if not found just return the original term"
-  [expr]
-  (map resolve-alias expr))
+  [term]
+  (if (and (symbol? term) (bounded? term))
+    term
+    (get operator-alias term term)))
 
 (defn- empty-arglist? [xs]
   (let [elem (fnext xs)]
