@@ -117,18 +117,18 @@
     (first infix-expr)
 
     :else
-    (loop [ops operator-precedence]
-      (if-let [op (first ops)]
-        (let [infix-expr (resolve-aliases infix-expr)
-              idx        (.lastIndexOf ^java.util.List infix-expr op)]
-          (if (pos? idx)
-            (let [[expr1 [op & expr2]] (split-at idx infix-expr)]
-              (list op (rewrite expr1) (rewrite expr2)))
-            (recur (next ops))))
+    (let [infix-expr (map resolve-alias infix-expr)]
+      (loop [ops operator-precedence]
+        (if-let [op (first ops)]
+          (let [idx (.lastIndexOf ^java.util.List infix-expr op)]
+            (if (pos? idx)
+              (let [[expr1 [op & expr2]] (split-at idx infix-expr)]
+                (list op (rewrite expr1) (rewrite expr2)))
+              (recur (next ops))))
 
-        (if (empty-arglist? infix-expr)
-          (list (rewrite (first infix-expr)))
-          (list (rewrite (first infix-expr)) (rewrite (next infix-expr))))))))
+          (if (empty-arglist? infix-expr)
+            (list (rewrite (first infix-expr)))
+            (list (rewrite (first infix-expr)) (rewrite (next infix-expr)))))))))
 
 (def base-env
   (merge
