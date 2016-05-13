@@ -82,6 +82,13 @@
   (is (= 5 ((from-string [f] "f() + 2") (fn [] 3))))
   (is (true? (<= 0 ((from-string "rand() * 10")) 10)))
   (is (true? (<= 0 ((from-string "randInt(10)")) 10)))
+  (is (= 25.0 ((from-string "pow(5,2)"))))
+  (is (= 0.1411200080598672 ((from-string "sin(3)"))))
+  (is (= 0.1411200080598672 ((from-string "sin 3"))))
+  (is (= 3.1415926535897932 ((from-string "pi"))))
+  (is (= 2.718281828459045 ((from-string "e"))))
+  (is (= 15 ((from-string [e] "e * 3") 5)))
+  (is (= 384.2880400203104 ((from-string [x] "product(e, pi, 3 * 3, x)") 5)))
   (is (thrown-with-msg? java.text.ParseException #"Failed to parse expression: 'x \+ '"
                         ((from-string [x] "x + ") 3)))
   (is (thrown-with-msg? clojure.lang.ArityException #"Wrong number of args \(2\) passed to: .*"

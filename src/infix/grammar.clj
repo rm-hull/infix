@@ -173,6 +173,12 @@
 (def mulop (binary-op "*" "/" "÷" "**" "%" ">>" ">>>" "<<"))
 (def addop (binary-op "+" "-" "|" "&"))
 
+(defn- resolve-var [arg env]
+  (let [v (arg env)]
+    (if (var? v)
+      (var-get v)
+      v)))
+
 (defn- binary-reducer [op-parser arg-parser]
   (do*
     (a1 <- arg-parser)
@@ -186,8 +192,8 @@
     (return
       (fn [env]
         (reduce
-          (fn [acc [op a2]] ((op env) acc (a2 env)))
-          (a1 env)
+          (fn [acc [op a2]] ((op env) acc (resolve-var a2 env)))
+          (resolve-var a1 env)
           rst)))))
 
 (def term (binary-reducer mulop factor))
