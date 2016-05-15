@@ -25,53 +25,57 @@
     [infix.math]
     [infix.bit-shuffling]))
 
-(def ^:dynamic operator-alias
-  {'&&     'and
-   '||     'or
-   '==     '=
-   '!=     'not=
-   '%      'mod
-   '<<     'bit-shift-left
-   '>>     'bit-shift-right
-   '>>>    'unsigned-bit-shift-right
-   '!      'not
-   '&      'bit-and
-   '|      'bit-or
-   '.      '*
-   'abs    'Math/abs
-   'signum 'Math/signum
-   '**     'Math/pow
-   'sin    'Math/sin
-   'cos    'Math/cos
-   'tan    'Math/tan
-   'asin   'Math/asin
-   'acos   'Math/acos
-   'atan   'Math/atan
-   'sinh   'Math/sinh
-   'cosh   'Math/cosh
-   'tanh   'Math/tanh
-   'sec    'infix.math/sec
-   'csc    'infix.math/csc
-   'cot    'infix.math/cot
-   'asec   'infix.math/asec
-   'acsc   'infix.math/acsc
-   'acot   'infix.math/acot
-   'exp    'Math/exp
-   'log    'Math/log
-   'e      'Math/E
-   'π      'Math/PI
-   'φ      'infix.math/φ
-   'sqrt   'Math/sqrt
-   '√      'Math/sqrt
-   '÷      'infix.math/divide
-   'root   'infix.math/root
-   'gcd    'infix.math/gcd
-   'lcm    'infix.math/lcm
-   'fact   'infix.math/fact
-   'sum    'infix.math/sum
-   '∑      'infix.math/sum
-   'product 'infix.math/product
-   '∏      'infix.math/product })
+(def operator-alias
+  (atom
+    {'&&     'and
+     '||     'or
+     '==     '=
+     '!=     'not=
+     '%      'mod
+     '<<     'bit-shift-left
+     '>>     'bit-shift-right
+     '>>>    'unsigned-bit-shift-right
+     '!      'not
+     '&      'bit-and
+     '|      'bit-or
+     '.      '*
+     'abs    'Math/abs
+     'signum 'Math/signum
+     '**     'Math/pow
+     'sin    'Math/sin
+     'cos    'Math/cos
+     'tan    'Math/tan
+     'asin   'Math/asin
+     'acos   'Math/acos
+     'atan   'Math/atan
+     'sinh   'Math/sinh
+     'cosh   'Math/cosh
+     'tanh   'Math/tanh
+     'sec    'infix.math/sec
+     'csc    'infix.math/csc
+     'cot    'infix.math/cot
+     'asec   'infix.math/asec
+     'acsc   'infix.math/acsc
+     'acot   'infix.math/acot
+     'exp    'Math/exp
+     'log    'Math/log
+     'e      'Math/E
+     'π      'Math/PI
+     'φ      'infix.math/φ
+     'sqrt   'Math/sqrt
+     '√      'Math/sqrt
+     '÷      'infix.math/divide
+     'root   'infix.math/root
+     'gcd    'infix.math/gcd
+     'lcm    'infix.math/lcm
+     'fact   'infix.math/fact
+     'sum    'infix.math/sum
+     '∑      'infix.math/sum
+     'product 'infix.math/product
+     '∏      'infix.math/product }))
+
+(defn suppress! [sym]
+  (swap! operator-alias dissoc sym))
 
 (def operator-precedence
   ; From https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages
@@ -100,7 +104,7 @@
   [term]
   (if (and (symbol? term) (bounded? term))
     term
-    (get operator-alias term term)))
+    (get @operator-alias term term)))
 
 (defn- empty-arglist? [xs]
   (let [elem (fnext xs)]
