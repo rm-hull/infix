@@ -31,8 +31,8 @@
 ; addop ::= "+" | "-".
 ; mulop ::= "*" | "/".
 ;
-; function ::= envref expression | envref "(" expression { "," expression } ")".
-; envref ::= letter { letter | digit | "-" | "_" }.
+; function ::= envref expression | envref "(" <empty> | expression { "," expression } ")".
+; envref ::= letter { letter | digit | "_" }.
 ; var ::= envref.
 ; number ::= integer | decimal | rational | binary | hex
 ; binary :: = [ "-" ] "0b" { "0" | "1" }.

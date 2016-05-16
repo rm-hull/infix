@@ -183,7 +183,43 @@ referenced in a subsequent function definition:
 
 ## EBNF Grammar Rules
 
-> TODO - needs documenting - see issue [#15](https://github.com/rm-hull/infix/issues/15)
+The `from-string` macro parses infix expressions based on the EBNF
+[grammar rules](https://github.com/rm-hull/infix/blob/master/src/infix/grammar.clj)
+as follows:
+
+* _**&lt;expression&gt;** ::= term { addop term }._
+
+* _**&lt;term&gt;** ::= factor { mulop factor }._
+
+* _**&lt;factor&gt;** ::= "(" expression ")" | var | number | function._
+
+* _**&lt;addop&gt;** ::= "+" | "-" | "|" | "&"._
+
+* _**&lt;mulop&gt;** ::= "*" | "/" | "÷" | "**" | "%" | ">>" | ">>>" | "<<"._
+
+* _**&lt;function&gt;** ::= envref expression | envref "(" &lt;empty&gt; | expression { "," expression } ")"._
+
+* _**&lt;envref&gt;** ::= letter { letter | digit | "_" }._
+
+* _**&lt;var&gt;** ::= envref._
+
+* _**&lt;number&gt;** ::= integer | decimal | rational | binary | hex_
+
+* _**&lt;binary&gt;** :: = [ "-" ] "0b" { "0" | "1" }._
+
+* _**&lt;hex&gt;** :: = [ "-" ] "0x" | "#" { "0" | ... | "9" | "A" | ... | "F" | "a" | ... | "f" }._
+
+* _**&lt;integer&gt;** :: = [ "-" ] digits._
+
+* _**&lt;decimal&gt;** :: = [ "-" ] digits "." digits._
+
+* _**&lt;rational&gt;** :: = integer "/" digits._
+
+* _**&lt;letter&gt;** ::= "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"._
+
+* _**&lt;digit&gt;** ::= "0" | "1" | ... | "8" | "9"._
+
+* _**&lt;digits&gt;** ::= digit { digit }._
 
 ## References
 
