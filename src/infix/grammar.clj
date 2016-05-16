@@ -22,8 +22,9 @@
 
 (ns infix.grammar
   (:require
-    [infix.parser :refer :all]
-    [infix.math :as m]))
+    [jasentaa.monad :as m]
+    [jasentaa.parser.basic :refer :all]
+    [jasentaa.parser.combinators :refer :all]))
 
 ; expression ::= term { addop term }.
 ; term ::= factor { mulop factor }.
@@ -52,15 +53,15 @@
 (def alpha-num (any-of letter digit (match "_")))
 
 (def digits
-  (do*
+  (m/do*
     (text <- (plus digit))
-    (return (apply str text))))
+    (m/return (apply str text))))
 
 (def envref
-  (do*
+  (m/do*
    (fst <- letter)
    (rst <- (many alpha-num))
-   (return (let [kw (keyword (apply str (cons fst rst)))]
+   (m/return (let [kw (keyword (apply str (cons fst rst)))]
              (fn [env]
                (if (contains? env kw)
                  (get env kw)
@@ -70,99 +71,99 @@
 (def var envref)
 
 (def binary
-  (do*
+  (m/do*
     (sign <- (optional (match "-")))
     (string "0b")
-    (value <- (do*
+    (value <- (m/do*
                 (text <- (plus (from-re #"[01]")))
-                (return (apply str text))))
-    (return (constantly (Long/parseLong (str sign value) 2)))))
+                (m/return (apply str text))))
+    (m/return (constantly (Long/parseLong (str sign value) 2)))))
 
 (def hex
-  (do*
+  (m/do*
     (sign <- (optional (match "-")))
     (any-of
       (match "#")
       (string "0x"))
-    (value <- (do*
+    (value <- (m/do*
                 (text <- (plus (from-re #"[0-9A-Fa-f]")))
-                (return (apply str text))))
-    (return (constantly (Long/parseLong (str sign value) 16)))))
+                (m/return (apply str text))))
+    (m/return (constantly (Long/parseLong (str sign value) 16)))))
 
 (def integer
-  (do*
+  (m/do*
     (sign <- (optional (match "-")))
     (value <- digits)
-    (return (constantly (Long/parseLong (str sign value))))))
+    (m/return (constantly (Long/parseLong (str sign value))))))
 
 (def rational
-  (do*
+  (m/do*
     (dividend <- integer)
     (match "/")
     (divisor <- digits)
-    (return (constantly (/ (dividend) (Long/parseLong divisor))))))
+    (m/return (constantly (/ (dividend) (Long/parseLong divisor))))))
 
 (def decimal
-  (do*
+  (m/do*
     (sign <- (optional (match "-")))
     (i <- digits)
     (p <- (match "."))
     (d <- digits)
-    (return (constantly (Double/parseDouble (str sign i p d))))))
+    (m/return (constantly (Double/parseDouble (str sign i p d))))))
 
 (def number
   (any-of integer decimal rational binary hex))
 
 (defn list-of [parser]
-  (do*
+  (m/do*
     (fst <- parser)
     (rst <- (optional
-              (do*
+              (m/do*
                 spaces
                 (match ",")
                 spaces
                 (list-of parser))))
-    (return (cons fst rst))))
+    (m/return (cons fst rst))))
 
 (declare expression)
 
 (def function
   (or-else
-    (do*
+    (m/do*
       (f <- envref)
       (plus (match " "))
       (expr <- expression)
-      (return (fn [env]
+      (m/return (fn [env]
                 ((f env) (expr env)))))
-    (do*
+    (m/do*
       (f <- envref)
       (match "(")
       spaces
-      (args <- (or-else (list-of expression) (return nil)))
+      (args <- (or-else (list-of expression) (m/return nil)))
       spaces
       (match ")")
-      (return (fn [env]
+      (m/return (fn [env]
                 (apply
                   (f env)
                   (map #(% env) args)))))))
 
 (def factor
   (any-of
-    (do*
+    (m/do*
       (match "(")
       spaces
       (e <- expression)
       spaces
       (match ")")
-      (return e))
+      (m/return e))
     var
     number
     function))
 
 (defn binary-op [& ops]
-  (do*
+  (m/do*
     (op <- (reduce or-else (map string ops)))
-    (return
+    (m/return
       (let [kw (keyword (str op))]
         (fn [env]
           (if (contains? env kw)
@@ -180,16 +181,16 @@
       v)))
 
 (defn- binary-reducer [op-parser arg-parser]
-  (do*
+  (m/do*
     (a1 <- arg-parser)
     (rst <- (many
-              (do*
+              (m/do*
                 spaces
                 (op <- op-parser)
                 spaces
                 (a2 <- arg-parser)
-                (return [op a2]))))
-    (return
+                (m/return [op a2]))))
+    (m/return
       (fn [env]
         (reduce
           (fn [acc [op a2]] ((op env) acc (resolve-var a2 env)))

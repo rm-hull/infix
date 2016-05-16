@@ -23,8 +23,8 @@
 
 (ns infix.macros
   (:require
+    [jasentaa.parser :refer [parse-all]]
     [infix.core :refer [rewrite resolve-alias base-env]]
-    [infix.parser :refer [parse-all]]
     [infix.grammar :refer [expression]]))
 
 (defmacro infix

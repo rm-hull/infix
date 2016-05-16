@@ -23,8 +23,8 @@
 (ns infix.grammar-test
   (:require
     [clojure.test :refer :all]
+    [jasentaa.parser :refer [parse-all]]
     [infix.grammar :refer :all]
-    [infix.parser :refer [parse-all]]
     [infix.core :refer [base-env]]))
 
 (defn float=
