@@ -60,5 +60,4 @@
           (with-meta
             (fn [~@(vals b#)]
               (f# (merge ~env ~b#)))
-            {:doc ~expr})
-        (throw (java.text.ParseException. (str "Failed to parse expression: '" ~expr "'") 0)))))))
+            {:doc ~expr}))))))

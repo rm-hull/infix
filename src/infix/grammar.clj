@@ -23,6 +23,7 @@
 (ns infix.grammar
   (:require
     [jasentaa.monad :as m]
+    [jasentaa.position :refer [strip-location]]
     [jasentaa.parser.basic :refer :all]
     [jasentaa.parser.combinators :refer :all]))
 
@@ -55,13 +56,13 @@
 (def digits
   (m/do*
     (text <- (plus digit))
-    (m/return (apply str text))))
+    (m/return (strip-location text))))
 
 (def envref
   (m/do*
    (fst <- letter)
    (rst <- (many alpha-num))
-   (m/return (let [kw (keyword (apply str (cons fst rst)))]
+   (m/return (let [kw (keyword (strip-location (cons fst rst)))]
              (fn [env]
                (if (contains? env kw)
                  (get env kw)
@@ -76,8 +77,8 @@
     (string "0b")
     (value <- (m/do*
                 (text <- (plus (from-re #"[01]")))
-                (m/return (apply str text))))
-    (m/return (constantly (Long/parseLong (str sign value) 2)))))
+                (m/return (strip-location text))))
+    (m/return (constantly (Long/parseLong (str (:char sign) value) 2)))))
 
 (def hex
   (m/do*
@@ -87,14 +88,14 @@
       (string "0x"))
     (value <- (m/do*
                 (text <- (plus (from-re #"[0-9A-Fa-f]")))
-                (m/return (apply str text))))
-    (m/return (constantly (Long/parseLong (str sign value) 16)))))
+                (m/return (strip-location text))))
+    (m/return (constantly (Long/parseLong (str (:char sign) value) 16)))))
 
 (def integer
   (m/do*
     (sign <- (optional (match "-")))
     (value <- digits)
-    (m/return (constantly (Long/parseLong (str sign value))))))
+    (m/return (constantly (Long/parseLong (str (:char sign) value))))))
 
 (def rational
   (m/do*
@@ -109,7 +110,7 @@
     (i <- digits)
     (p <- (match "."))
     (d <- digits)
-    (m/return (constantly (Double/parseDouble (str sign i p d))))))
+    (m/return (constantly (Double/parseDouble (str (:char sign) i "." d))))))
 
 (def number
   (any-of integer decimal rational binary hex))
@@ -120,8 +121,7 @@
     (rst <- (optional
               (m/do*
                 spaces
-                (match ",")
-                spaces
+                (symb ",")
                 (list-of parser))))
     (m/return (cons fst rst))))
 
@@ -137,11 +137,9 @@
                 ((f env) (expr env)))))
     (m/do*
       (f <- envref)
-      (match "(")
-      spaces
+      (symb "(")
       (args <- (or-else (list-of expression) (m/return nil)))
-      spaces
-      (match ")")
+      (symb ")")
       (m/return (fn [env]
                 (apply
                   (f env)
@@ -150,11 +148,9 @@
 (def factor
   (any-of
     (m/do*
-      (match "(")
-      spaces
+      (symb "(")
       (e <- expression)
-      spaces
-      (match ")")
+      (symb ")")
       (m/return e))
     var
     number
@@ -164,7 +160,9 @@
   (m/do*
     (op <- (reduce or-else (map string ops)))
     (m/return
-      (let [kw (keyword (str op))]
+      ;; TODO: move `(str (or (:char op) (strip-location op)))` into jasentaa
+      ;; See https://github.com/rm-hull/jasentaa/issues/5
+      (let [kw (keyword (str (or (:char op) (strip-location op))))]
         (fn [env]
           (if (contains? env kw)
             (get env kw)
