@@ -3,6 +3,7 @@ pom.xml.asc
 *jar
 /lib/
 /classes/
+/doc/api/
 /target/
 .lein-deps-sum
 .lein-repl-history

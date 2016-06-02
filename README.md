@@ -42,6 +42,10 @@ For maven-based projects, add the following to your `pom.xml`:
 </dependency>
 ```
 
+## API Documentation
+
+See [www.destructuring-bind.org/infix](http://www.destructuring-bind.org/infix/) for API details.
+
 ## Basic Usage
 
 ```clojure
