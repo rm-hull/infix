@@ -22,8 +22,10 @@
 
 (ns infix.core
   (:require
-    [infix.math]
-    [infix.bit-shuffling]))
+    [infix.math.core]
+    [infix.math.constants]
+    [infix.math.bit-shuffling]
+    [infix.math.trig]))
 
 (def operator-alias
   (atom
@@ -51,28 +53,28 @@
      'sinh   'Math/sinh
      'cosh   'Math/cosh
      'tanh   'Math/tanh
-     'sec    'infix.math/sec
-     'csc    'infix.math/csc
-     'cot    'infix.math/cot
-     'asec   'infix.math/asec
-     'acsc   'infix.math/acsc
-     'acot   'infix.math/acot
+     'sec    'infix.math.trig/sec
+     'csc    'infix.math.trig/csc
+     'cot    'infix.math.trig/cot
+     'asec   'infix.math.trig/asec
+     'acsc   'infix.math.trig/acsc
+     'acot   'infix.math.trig/acot
      'exp    'Math/exp
      'log    'Math/log
      'e      'Math/E
      'π      'Math/PI
-     'φ      'infix.math/φ
+     'φ      'infix.math.constants/φ
      'sqrt   'Math/sqrt
      '√      'Math/sqrt
-     '÷      'infix.math/divide
-     'root   'infix.math/root
-     'gcd    'infix.math/gcd
-     'lcm    'infix.math/lcm
-     'fact   'infix.math/fact
-     'sum    'infix.math/sum
-     '∑      'infix.math/sum
-     'product 'infix.math/product
-     '∏      'infix.math/product }))
+     '÷      'infix.math.core/divide
+     'root   'infix.math.core/root
+     'gcd    'infix.math.core/gcd
+     'lcm    'infix.math.core/lcm
+     'fact   'infix.math.core/fact
+     'sum    'infix.math.core/sum
+     '∑      'infix.math.core/sum
+     'product 'infix.math.core/product
+     '∏      'infix.math.core/product }))
 
 (defn suppress! [sym]
   (swap! operator-alias dissoc sym))
@@ -142,7 +144,8 @@
   (merge
     ; wrapped java.lang.Math constants & functions
     (->>
-      ['infix.math 'infix.bit-shuffling]
+      ['infix.math.core 'infix.math.constants
+       'infix.math.trig 'infix.math.bit-shuffling]
       (mapcat ns-publics)
       (map (fn [[k v]] (vector (keyword k) v)))
       (into {}))

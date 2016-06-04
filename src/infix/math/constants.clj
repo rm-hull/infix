@@ -20,15 +20,12 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns infix.math)
+(ns infix.math.constants
+  (:require
+    [infix.math.core :refer [√]]))
 
-(defmacro defunary [func-name & [alias]]
-  (let [arg (gensym "x__")]
-    `(defn ~(or alias func-name) [^double ~arg]
-       (~(symbol (str "Math/" func-name)) ~arg))))
+(def φ (/ (inc (√ 5)) 2))
+(def e Math/E)
+(def π Math/PI)
+(def pi Math/PI)
 
-(defmacro defbinary [func-name & [alias]]
-  (let [arg1 (gensym "x__")
-        arg2 (gensym "y__")]
-    `(defn ~(or alias func-name) [^double ~arg1 ^double ~arg2]
-       (~(symbol (str "Math/" func-name)) ~arg1 ~arg2))))

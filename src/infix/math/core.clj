@@ -20,17 +20,47 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns infix.bit-shuffling)
+(ns infix.math.core
+  (:refer-clojure :exclude [rand])
+  (:require
+    [infix.math :refer [defunary defbinary]]))
 
-(def | bit-or)
+(defunary abs)
+(defunary signum)
+(defunary sqrt)
+(defunary sqrt √)
+(defunary exp)
+(defunary log)
 
-(def & bit-and)
+(defbinary pow)
+(defbinary pow **)
 
-(def ¬ bit-not)
+(def product *)
+(def sum +)
+(def rand clojure.core/rand)
+(def randInt clojure.core/rand-int)
 
-(def >> bit-shift-right)
+(defn divide [a b]
+  (if (zero? b)
+    (if (neg? a)
+      Double/NEGATIVE_INFINITY
+      Double/POSITIVE_INFINITY)
+    (/ a b)))
 
-(def >>> unsigned-bit-shift-right)
+(def ÷ divide)
 
-(def << bit-shift-left)
+(defn root [a b]
+  (pow b (/ 1 a)))
 
+(defn gcd [a b]
+  (if (zero? b)
+    a
+    (recur b (rem a b))))
+
+(defn lcm [a b]
+  (/ (* a b) (gcd a b)))
+
+(defn fact [n]
+  (if (zero? n)
+    1
+    (apply * (range 1 (inc n)))))
