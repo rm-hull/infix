@@ -78,7 +78,7 @@
     (value <- (m/do*
                 (text <- (plus (from-re #"[01]")))
                 (m/return (strip-location text))))
-    (m/return (constantly (Long/parseLong (str (:char sign) value) 2)))))
+    (m/return (constantly (Long/parseLong (str (strip-location sign) value) 2)))))
 
 (def hex
   (m/do*
@@ -89,13 +89,13 @@
     (value <- (m/do*
                 (text <- (plus (from-re #"[0-9A-Fa-f]")))
                 (m/return (strip-location text))))
-    (m/return (constantly (Long/parseLong (str (:char sign) value) 16)))))
+    (m/return (constantly (Long/parseLong (str (strip-location sign) value) 16)))))
 
 (def integer
   (m/do*
     (sign <- (optional (match "-")))
     (value <- digits)
-    (m/return (constantly (Long/parseLong (str (:char sign) value))))))
+    (m/return (constantly (Long/parseLong (str (strip-location sign) value))))))
 
 (def rational
   (m/do*
@@ -110,7 +110,7 @@
     (i <- digits)
     (p <- (match "."))
     (d <- digits)
-    (m/return (constantly (Double/parseDouble (str (:char sign) i "." d))))))
+    (m/return (constantly (Double/parseDouble (str (strip-location sign) i "." d))))))
 
 (def number
   (any-of integer decimal rational binary hex))
@@ -160,9 +160,7 @@
   (m/do*
     (op <- (reduce or-else (map string ops)))
     (m/return
-      ;; TODO: move `(str (or (:char op) (strip-location op)))` into jasentaa
-      ;; See https://github.com/rm-hull/jasentaa/issues/5
-      (let [kw (keyword (str (or (:char op) (strip-location op))))]
+      (let [kw (keyword (str (strip-location op)))]
         (fn [env]
           (if (contains? env kw)
             (get env kw)
