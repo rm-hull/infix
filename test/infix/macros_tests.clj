@@ -90,8 +90,10 @@
   (is (= 15 ((from-string [e] "e * 3") 5)))
   (is (= 19624.068163608234 ((from-string [e] "e ** (3 + pi)") 5)))
   (is (= 384.2880400203104 ((from-string [x] "product(e, pi, 3 * 3, x)") 5)))
-  (is (thrown-with-msg? java.text.ParseException #"Failed to parse text at line: 1, col: 2"
+  (is (thrown-with-msg? java.text.ParseException #"Failed to parse text at line: 1, col: 3\nx \+ \n  \^"
                         ((from-string [x] "x + ") 3)))
+  (is (thrown-with-msg? java.text.ParseException #"Failed to parse text at line: 1, col: 8\nx\+\(y\*7\)\)\n       \^"
+                        ((from-string [x y] "x+(y*7))") 3 2)))
   (is (thrown-with-msg? clojure.lang.ArityException #"Wrong number of args \(2\) passed to: .*"
                         ((from-string [x] "x + 3") 2 3)))
   (is (thrown-with-msg? IllegalStateException #"x is not bound in environment"
