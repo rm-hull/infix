@@ -61,7 +61,7 @@
 (def envref
   (m/do*
    (fst <- letter)
-   (rst <- (many alpha-num))
+   (rst <- (token (many alpha-num)))
    (m/return (let [kw (keyword (strip-location (cons fst rst)))]
              (fn [env]
                (if (contains? env kw)
@@ -76,7 +76,7 @@
     (sign <- (optional (match "-")))
     (string "0b")
     (value <- (m/do*
-                (text <- (plus (from-re #"[01]")))
+                (text <- (token (plus (from-re #"[01]"))))
                 (m/return (strip-location text))))
     (m/return (constantly (Long/parseLong (str (strip-location sign) value) 2)))))
 
@@ -87,21 +87,21 @@
       (match "#")
       (string "0x"))
     (value <- (m/do*
-                (text <- (plus (from-re #"[0-9A-Fa-f]")))
+                (text <- (token (plus (from-re #"[0-9A-Fa-f]"))))
                 (m/return (strip-location text))))
     (m/return (constantly (Long/parseLong (str (strip-location sign) value) 16)))))
 
 (def integer
   (m/do*
     (sign <- (optional (match "-")))
-    (value <- digits)
+    (value <- (token digits))
     (m/return (constantly (Long/parseLong (str (strip-location sign) value))))))
 
 (def rational
   (m/do*
     (dividend <- integer)
     (match "/")
-    (divisor <- digits)
+    (divisor <- (token digits))
     (m/return (constantly (/ (dividend) (Long/parseLong divisor))))))
 
 (def decimal
@@ -109,7 +109,7 @@
     (sign <- (optional (match "-")))
     (i <- digits)
     (p <- (match "."))
-    (d <- digits)
+    (d <- (token digits))
     (m/return (constantly (Double/parseDouble (str (strip-location sign) i "." d))))))
 
 (def number
@@ -182,8 +182,7 @@
     (rst <- (many
               (m/do*
                 spaces
-                (op <- op-parser)
-                spaces
+                (op <- (token op-parser))
                 (a2 <- arg-parser)
                 (m/return [op a2]))))
     (m/return
