@@ -116,14 +116,7 @@
   (any-of integer decimal rational binary hex))
 
 (defn list-of [parser]
-  (m/do*
-    (fst <- parser)
-    (rst <- (optional
-              (m/do*
-                spaces
-                (symb ",")
-                (list-of parser))))
-    (m/return (cons fst rst))))
+  (optional (separated-by (token parser) (symb ","))))
 
 (declare expression)
 
@@ -138,7 +131,7 @@
     (m/do*
       (f <- envref)
       (symb "(")
-      (args <- (or-else (list-of expression) (m/return nil)))
+      (args <- (list-of expression))
       (symb ")")
       (m/return (fn [env]
                 (apply

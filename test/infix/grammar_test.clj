@@ -97,6 +97,7 @@
   (is (thrown? ParseException (parse-all (list-of digits) " ")))
   (is (thrown? ParseException (parse-all (list-of digits) "")))
   (is (= ["1"] (parse-all (list-of digits) "1")))
+  (is (= ["6", "7", "8"] (parse-all (list-of digits) "6 , 7, 8 ")))
   (is (= ["1", "1", "2", "3", "5"] (parse-all (list-of digits) "1,1,2,3,5"))))
 
 (deftest check-function
