@@ -199,7 +199,7 @@ as follows:
 
 * _**&lt;addop&gt;** ::= "+" | "-" | "|" | "&"._
 
-* _**&lt;mulop&gt;** ::= "*" | "/" | "÷" | "**" | "%" | ">>" | ">>>" | "<<"._
+* _**&lt;mulop&gt;** ::= "\*" | "/" | "÷" | "\*\*" | "%" | ">>" | ">>>" | "<<"._
 
 * _**&lt;function&gt;** ::= envref expression | envref "(" &lt;empty&gt; | expression { "," expression } ")"._
 
