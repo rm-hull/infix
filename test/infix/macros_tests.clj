@@ -113,3 +113,7 @@
     (doseq [t (repeatedly 50 #(rand-int 1000000))]
       (is (= (f t) (infix (t >> 5 | t >> 8)))
           (str "Incorrect evaluation for t=" t)))))
+
+(deftest check-division-precedence
+  (let [x 0 y 1]
+    (is (= 0.0 (infix sin(x ÷ y ** 2))))))
