@@ -8,8 +8,6 @@
     [org.clojure/clojure "1.8.0"]
     [rm-hull/jasentaa "0.2.3"]]
   :scm {:url "git@github.com:rm-hull/infix.git"}
-  :plugins [
-    [lein-codox "0.9.5"] ]
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
   :codox {
@@ -21,4 +19,5 @@
     :dev {
       :global-vars {*warn-on-reflection* true}
       :plugins [
+        [lein-codox "0.9.5"]
         [lein-cloverage "1.0.6"]]}})
