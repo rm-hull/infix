@@ -151,4 +151,9 @@
   (is (= 120 ((parse-all expression "fact 5") base-env)))
   (is (= 4 ((parse-all expression "gcd(8, 12)") base-env)))
   (is (= 24 ((parse-all expression "lcm(8, 12)") base-env))))
+  (is (= true ((parse-all expression "3 = 3") base-env)))
+  (is (= false ((parse-all expression "3 = (5 - 1)") base-env)))
+  (is (= true ((parse-all expression "3 != 5") base-env)))
+  (is (= false ((parse-all expression "0 = 0.0") base-env)))
+  (is (= true ((parse-all expression "0 == 0.0") base-env)))
 

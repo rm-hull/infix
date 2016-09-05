@@ -160,7 +160,7 @@
             (throw (IllegalStateException.
                      (str (name kw) " is not bound in environment")))))))))
 
-(def mulop (binary-op "*" "/" "÷" "**" "%" ">>" ">>>" "<<"))
+(def mulop (binary-op "*" "/" "÷" "**" "%" ">>" ">>>" "<<" "=" "==" "!="))
 (def addop (binary-op "+" "-" "|" "&"))
 
 (defn- resolve-var [arg env]

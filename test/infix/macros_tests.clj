@@ -117,3 +117,11 @@
 (deftest check-division-precedence
   (let [x 0 y 1]
     (is (= 0.0 (infix sin(x ÷ y ** 2))))))
+
+(deftest check-equality
+  (is (true? (infix 5 = 5)))
+  (is (false? (infix 5 = 5.0)))
+  (is (true? (infix 5 == 5)))
+  (is (true? (infix 5 == 5.0)))
+  (is (true? (infix 5 != 3)))
+  (is (true? (infix 5 not= 4))))

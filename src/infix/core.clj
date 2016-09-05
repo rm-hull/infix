@@ -31,7 +31,6 @@
   (atom
     {'&&     'and
      '||     'or
-     '==     '=
      '!=     'not=
      '%      'mod
      '<<     'bit-shift-left
@@ -84,7 +83,7 @@
   ; Lowest precedence first
   [
    ;; binary operators
-   'or 'and 'bit-or 'bit-xor 'bit-and 'not= '= '>= '> '<= '<
+   'or 'and 'bit-or 'bit-xor 'bit-and 'not= '= '== '>= '> '<= '<
    'unsigned-bit-shift-right 'bit-shift-right 'bit-shift-left
    '- '+ '/ 'infix.math.core/divide '* 'Math/pow 'mod
 
@@ -152,6 +151,9 @@
 
     ; Basic ops
     {
+      :== ==
+      := =
+      :!= not=
       :+ +
       :- -
       :* *
