@@ -22,7 +22,7 @@
 
 (ns infix.math.constants
   (:require
-    [infix.math.core :refer [√]]))
+   [infix.math.core :refer [√]]))
 
 (def φ (/ (inc (√ 5)) 2))
 (def e Math/E)

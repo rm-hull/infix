@@ -22,58 +22,58 @@
 
 (ns infix.core
   (:require
-    [infix.math.core]
-    [infix.math.constants]
-    [infix.math.bit-shuffling]
-    [infix.math.trig]))
+   [infix.math.core]
+   [infix.math.constants]
+   [infix.math.bit-shuffling]
+   [infix.math.trig]))
 
 (def operator-alias
   (atom
-    {'&&     'and
-     '||     'or
-     '!=     'not=
-     '%      'mod
-     '<<     'bit-shift-left
-     '>>     'bit-shift-right
-     '>>>    'unsigned-bit-shift-right
-     '!      'not
-     '&      'bit-and
-     '|      'bit-or
-     '.      '*
-     'abs    'Math/abs
-     'signum 'Math/signum
-     '**     'Math/pow
-     'sin    'Math/sin
-     'cos    'Math/cos
-     'tan    'Math/tan
-     'asin   'Math/asin
-     'acos   'Math/acos
-     'atan   'Math/atan
-     'sinh   'Math/sinh
-     'cosh   'Math/cosh
-     'tanh   'Math/tanh
-     'sec    'infix.math.trig/sec
-     'csc    'infix.math.trig/csc
-     'cot    'infix.math.trig/cot
-     'asec   'infix.math.trig/asec
-     'acsc   'infix.math.trig/acsc
-     'acot   'infix.math.trig/acot
-     'exp    'Math/exp
-     'log    'Math/log
-     'e      'Math/E
-     'π      'Math/PI
-     'φ      'infix.math.constants/φ
-     'sqrt   'Math/sqrt
-     '√      'Math/sqrt
-     '÷      'infix.math.core/divide
-     'root   'infix.math.core/root
-     'gcd    'infix.math.core/gcd
-     'lcm    'infix.math.core/lcm
-     'fact   'infix.math.core/fact
-     'sum    'infix.math.core/sum
-     '∑      'infix.math.core/sum
-     'product 'infix.math.core/product
-     '∏      'infix.math.core/product }))
+   {'&&     'and
+    '||     'or
+    '!=     'not=
+    '%      'mod
+    '<<     'bit-shift-left
+    '>>     'bit-shift-right
+    '>>>    'unsigned-bit-shift-right
+    '!      'not
+    '&      'bit-and
+    '|      'bit-or
+    '.      '*
+    'abs    'Math/abs
+    'signum 'Math/signum
+    '**     'Math/pow
+    'sin    'Math/sin
+    'cos    'Math/cos
+    'tan    'Math/tan
+    'asin   'Math/asin
+    'acos   'Math/acos
+    'atan   'Math/atan
+    'sinh   'Math/sinh
+    'cosh   'Math/cosh
+    'tanh   'Math/tanh
+    'sec    'infix.math.trig/sec
+    'csc    'infix.math.trig/csc
+    'cot    'infix.math.trig/cot
+    'asec   'infix.math.trig/asec
+    'acsc   'infix.math.trig/acsc
+    'acot   'infix.math.trig/acot
+    'exp    'Math/exp
+    'log    'Math/log
+    'e      'Math/E
+    'π      'Math/PI
+    'φ      'infix.math.constants/φ
+    'sqrt   'Math/sqrt
+    '√      'Math/sqrt
+    '÷      'infix.math.core/divide
+    'root   'infix.math.core/root
+    'gcd    'infix.math.core/gcd
+    'lcm    'infix.math.core/lcm
+    'fact   'infix.math.core/fact
+    'sum    'infix.math.core/sum
+    '∑      'infix.math.core/sum
+    'product 'infix.math.core/product
+    '∏      'infix.math.core/product}))
 
 (defn suppress! [sym]
   (swap! operator-alias dissoc sym))
@@ -81,8 +81,7 @@
 (def operator-precedence
   ; From https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages
   ; Lowest precedence first
-  [
-   ;; binary operators
+  [;; binary operators
    'or 'and 'bit-or 'bit-xor 'bit-and 'not= '= '== '>= '> '<= '<
    'unsigned-bit-shift-right 'bit-shift-right 'bit-shift-left
    '- '+ '/ 'infix.math.core/divide '* 'Math/pow 'mod
@@ -93,7 +92,7 @@
    'Math/asin 'Math/acos 'Math/atan
    'Math/sinh 'Math/cosh 'Math/tanh
    'Math/sqrt 'Math/exp  'Math/log
-   'Math/abs  'Math/signum ])
+   'Math/abs  'Math/signum])
 
 (defn- bounded? [sym]
   (if-let [v (resolve sym)]
@@ -142,21 +141,19 @@
 (def base-env
   (merge
     ; wrapped java.lang.Math constants & functions
-    (->>
-      ['infix.math.core 'infix.math.constants
-       'infix.math.trig 'infix.math.bit-shuffling]
-      (mapcat ns-publics)
-      (map (fn [[k v]] (vector (keyword k) v)))
-      (into {}))
+   (->>
+    ['infix.math.core 'infix.math.constants
+     'infix.math.trig 'infix.math.bit-shuffling]
+    (mapcat ns-publics)
+    (map (fn [[k v]] (vector (keyword k) v)))
+    (into {}))
 
     ; Basic ops
-    {
-      :== ==
-      := =
-      :!= not=
-      :+ +
-      :- -
-      :* *
-      :/ /
-      :% mod
-    }))
+   {:== ==
+    := =
+    :!= not=
+    :+ +
+    :- -
+    :* *
+    :/ /
+    :% mod}))

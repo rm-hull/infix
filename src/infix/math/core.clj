@@ -23,7 +23,7 @@
 (ns infix.math.core
   (:refer-clojure :exclude [rand])
   (:require
-    [infix.math :refer [defunary defbinary]]))
+   [infix.math :refer [defunary defbinary]]))
 
 (defunary abs)
 (defunary signum)

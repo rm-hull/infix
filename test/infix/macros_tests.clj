@@ -22,8 +22,8 @@
 
 (ns infix.macros-tests
   (:require
-    [clojure.test :refer :all]
-    [infix.macros :refer [infix from-string]]))
+   [clojure.test :refer :all]
+   [infix.macros :refer [infix from-string]]))
 
 (def ε 0.0000001)
 
@@ -37,20 +37,20 @@
   (is (= 2 (infix (3 + 2) % 3))))
 
 (deftest check-aliasing
-  (is (= 5.0 (infix √(5 * 5))))
+  (is (= 5.0 (infix √ (5 * 5))))
   (is (= 2 (infix 5 % 3)))
   (let [t 0.324]
-    (is (> ε (Math/abs (- (infix sin(2 * t) + 3 * cos(4 * t)) 1.4176457261295824))))))
+    (is (> ε (Math/abs (- (infix sin (2 * t) + 3 * cos (4 * t)) 1.4176457261295824))))))
 
 (deftest check-nested-aliasing
-  (is (= 729.0 (infix abs(3 ** 6)))))
+  (is (= 729.0 (infix abs (3 ** 6)))))
 
 (deftest check-nullary-operators
   (let [f (fn [] (infix 3 + 7))
         g #(infix 7 + 21)]
-    (is (= 14 (infix f() + 4)))
-    (is (= 7  (infix g() / 4)))
-    (is (true? (<= 0 (infix rand() * 3) 3)))))
+    (is (= 14 (infix f () + 4)))
+    (is (= 7  (infix g () / 4)))
+    (is (true? (<= 0 (infix rand () * 3) 3)))))
 
 (deftest check-unary-precedence
   (let [x 4 y 3]
@@ -101,12 +101,12 @@
                         ((from-string "x + 3")))))
 
 (deftest check-math-namespace-aliases
-  (is (= 1.813477718829676 (infix csc(32))))
-  (is (= -1.5298856564663974 (infix sec(4)))))
+  (is (= 1.813477718829676 (infix csc (32))))
+  (is (= -1.5298856564663974 (infix sec (4)))))
 
 (deftest check-alias-expansion
   (let [x 4 y 3]
-    (is (= 0.389947492069644965 (infix exp(sin x + cos y) - sin(exp(x + y)))))))
+    (is (= 0.389947492069644965 (infix exp (sin x + cos y) - sin (exp (x + y)))))))
 
 (deftest check-equivalence
   (let [f (from-string [t] "t>>5 | t>>8")]
@@ -116,7 +116,7 @@
 
 (deftest check-division-precedence
   (let [x 0 y 1]
-    (is (= 0.0 (infix sin(x ÷ y ** 2))))))
+    (is (= 0.0 (infix sin (x ÷ y ** 2))))))
 
 (deftest check-equality
   (is (true? (infix 5 = 5)))

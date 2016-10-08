@@ -22,21 +22,21 @@
 
 (ns infix.grammar-test
   (:require
-    [clojure.test :refer :all]
-    [jasentaa.parser :as p :refer [parse-all]]
-    [infix.grammar :refer :all]
-    [infix.core :refer [base-env]])
+   [clojure.test :refer :all]
+   [jasentaa.parser :as p :refer [parse-all]]
+   [infix.grammar :refer :all]
+   [infix.core :refer [base-env]])
   (:import
-    [java.text ParseException]))
+   [java.text ParseException]))
 
 (defn float=
   ([x y] (float= x y 0.00001))
   ([x y epsilon]
-     (let [scale (if (or (zero? x) (zero? y)) 1 (Math/abs x))]
-       (<= (Math/abs (- x y)) (* scale epsilon)))))
+   (let [scale (if (or (zero? x) (zero? y)) 1 (Math/abs x))]
+     (<= (Math/abs (- x y)) (* scale epsilon)))))
 
 (deftest check-var
-  (let [env { :x 32 :something_else 19}]
+  (let [env {:x 32 :something_else 19}]
     (is (thrown? ParseException (parse-all var "54")))
     (is (= 32 ((parse-all var "x") env)))
     (is (= 19 ((parse-all var "something_else") env)))
@@ -115,7 +115,6 @@
     (is (= 43 ((parse-all expression "3 + 5 * 8") env)))
     (is (= 64 ((parse-all expression "(3 + 5) * 8") env)))))
 
-
 (deftest check-baseenv-functions
   (is (= 16 ((parse-all expression "9 + 7") base-env)))
   (is (= 12 ((parse-all expression "19 - 7") base-env)))
@@ -151,9 +150,9 @@
   (is (= 120 ((parse-all expression "fact 5") base-env)))
   (is (= 4 ((parse-all expression "gcd(8, 12)") base-env)))
   (is (= 24 ((parse-all expression "lcm(8, 12)") base-env))))
-  (is (= true ((parse-all expression "3 = 3") base-env)))
-  (is (= false ((parse-all expression "3 = (5 - 1)") base-env)))
-  (is (= true ((parse-all expression "3 != 5") base-env)))
-  (is (= false ((parse-all expression "0 = 0.0") base-env)))
-  (is (= true ((parse-all expression "0 == 0.0") base-env)))
+(is (= true ((parse-all expression "3 = 3") base-env)))
+(is (= false ((parse-all expression "3 = (5 - 1)") base-env)))
+(is (= true ((parse-all expression "3 != 5") base-env)))
+(is (= false ((parse-all expression "0 = 0.0") base-env)))
+(is (= true ((parse-all expression "0 == 0.0") base-env)))
 

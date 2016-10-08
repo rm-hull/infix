@@ -22,8 +22,8 @@
 
 (ns infix.math.trig
   (:require
-    [infix.math :refer [defunary defbinary]]
-    [infix.math.core :refer [÷]]))
+   [infix.math :refer [defunary defbinary]]
+   [infix.math.core :refer [÷]]))
 
 (defunary sin)
 (defunary cos)

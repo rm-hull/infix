@@ -23,24 +23,24 @@
 
 (ns infix.macros
   (:require
-    [jasentaa.parser :refer [parse-all]]
-    [infix.core :refer [rewrite resolve-alias base-env]]
-    [infix.grammar :refer [expression]]))
+   [jasentaa.parser :refer [parse-all]]
+   [infix.core :refer [rewrite resolve-alias base-env]]
+   [infix.grammar :refer [expression]]))
 
 (defmacro infix
   "Takes an infix expression, resolves an aliases before rewriting the
    infix expressions into standard LISP prefix expressions."
   [& expr]
   (->>
-    expr
-    (map resolve-alias)
-    rewrite))
+   expr
+   (map resolve-alias)
+   rewrite))
 
 (defn- binding-vars [bindings]
   (->>
-    bindings
-    (map #(vector (keyword %) (gensym "arg_")))
-    (into {})))
+   bindings
+   (map #(vector (keyword %) (gensym "arg_")))
+   (into {})))
 
 (defmacro from-string
   ([expr]
@@ -50,13 +50,13 @@
    `(from-string ~bindings ~base-env ~expr))
 
   ([bindings env expr]
-    (cond
-      (not (vector? bindings))
-      (throw (IllegalArgumentException. "Binding variables is not a vector"))
+   (cond
+     (not (vector? bindings))
+     (throw (IllegalArgumentException. "Binding variables is not a vector"))
 
-      :else
-      (let [b# (binding-vars bindings)]
-        `(if-let [f# (parse-all expression ~expr)]
+     :else
+     (let [b# (binding-vars bindings)]
+       `(if-let [f# (parse-all expression ~expr)]
           (with-meta
             (fn [~@(vals b#)]
               (f# (merge ~env ~b#)))

@@ -22,10 +22,10 @@
 
 (ns infix.grammar
   (:require
-    [jasentaa.monad :as m]
-    [jasentaa.position :refer [strip-location]]
-    [jasentaa.parser.basic :refer :all]
-    [jasentaa.parser.combinators :refer :all]))
+   [jasentaa.monad :as m]
+   [jasentaa.position :refer [strip-location]]
+   [jasentaa.parser.basic :refer :all]
+   [jasentaa.parser.combinators :refer :all]))
 
 ; expression ::= term { addop term }.
 ; term ::= factor { mulop factor }.
@@ -55,62 +55,62 @@
 
 (def digits
   (m/do*
-    (text <- (plus digit))
-    (m/return (strip-location text))))
+   (text <- (plus digit))
+   (m/return (strip-location text))))
 
 (def envref
   (m/do*
    (fst <- letter)
    (rst <- (token (many alpha-num)))
    (m/return (let [kw (keyword (strip-location (cons fst rst)))]
-             (fn [env]
-               (if (contains? env kw)
-                 (get env kw)
-                 (throw (IllegalStateException.
-                          (str (name kw) " is not bound in environment")))))))))
+               (fn [env]
+                 (if (contains? env kw)
+                   (get env kw)
+                   (throw (IllegalStateException.
+                           (str (name kw) " is not bound in environment")))))))))
 
 (def var envref)
 
 (def binary
   (m/do*
-    (sign <- (optional (match "-")))
-    (string "0b")
-    (value <- (m/do*
-                (text <- (token (plus (from-re #"[01]"))))
-                (m/return (strip-location text))))
-    (m/return (constantly (Long/parseLong (str (strip-location sign) value) 2)))))
+   (sign <- (optional (match "-")))
+   (string "0b")
+   (value <- (m/do*
+              (text <- (token (plus (from-re #"[01]"))))
+              (m/return (strip-location text))))
+   (m/return (constantly (Long/parseLong (str (strip-location sign) value) 2)))))
 
 (def hex
   (m/do*
-    (sign <- (optional (match "-")))
-    (any-of
-      (match "#")
-      (string "0x"))
-    (value <- (m/do*
-                (text <- (token (plus (from-re #"[0-9A-Fa-f]"))))
-                (m/return (strip-location text))))
-    (m/return (constantly (Long/parseLong (str (strip-location sign) value) 16)))))
+   (sign <- (optional (match "-")))
+   (any-of
+    (match "#")
+    (string "0x"))
+   (value <- (m/do*
+              (text <- (token (plus (from-re #"[0-9A-Fa-f]"))))
+              (m/return (strip-location text))))
+   (m/return (constantly (Long/parseLong (str (strip-location sign) value) 16)))))
 
 (def integer
   (m/do*
-    (sign <- (optional (match "-")))
-    (value <- (token digits))
-    (m/return (constantly (Long/parseLong (str (strip-location sign) value))))))
+   (sign <- (optional (match "-")))
+   (value <- (token digits))
+   (m/return (constantly (Long/parseLong (str (strip-location sign) value))))))
 
 (def rational
   (m/do*
-    (dividend <- integer)
-    (match "/")
-    (divisor <- (token digits))
-    (m/return (constantly (/ (dividend) (Long/parseLong divisor))))))
+   (dividend <- integer)
+   (match "/")
+   (divisor <- (token digits))
+   (m/return (constantly (/ (dividend) (Long/parseLong divisor))))))
 
 (def decimal
   (m/do*
-    (sign <- (optional (match "-")))
-    (i <- digits)
-    (p <- (match "."))
-    (d <- (token digits))
-    (m/return (constantly (Double/parseDouble (str (strip-location sign) i "." d))))))
+   (sign <- (optional (match "-")))
+   (i <- digits)
+   (p <- (match "."))
+   (d <- (token digits))
+   (m/return (constantly (Double/parseDouble (str (strip-location sign) i "." d))))))
 
 (def number
   (any-of integer decimal rational binary hex))
@@ -122,43 +122,43 @@
 
 (def function
   (or-else
-    (m/do*
-      (f <- envref)
-      (plus (match " "))
-      (expr <- expression)
-      (m/return (fn [env]
+   (m/do*
+    (f <- envref)
+    (plus (match " "))
+    (expr <- expression)
+    (m/return (fn [env]
                 ((f env) (expr env)))))
-    (m/do*
-      (f <- envref)
-      (symb "(")
-      (args <- (list-of expression))
-      (symb ")")
-      (m/return (fn [env]
+   (m/do*
+    (f <- envref)
+    (symb "(")
+    (args <- (list-of expression))
+    (symb ")")
+    (m/return (fn [env]
                 (apply
-                  (f env)
-                  (map #(% env) args)))))))
+                 (f env)
+                 (map #(% env) args)))))))
 
 (def factor
   (any-of
-    (m/do*
-      (symb "(")
-      (e <- expression)
-      (symb ")")
-      (m/return e))
-    var
-    number
-    function))
+   (m/do*
+    (symb "(")
+    (e <- expression)
+    (symb ")")
+    (m/return e))
+   var
+   number
+   function))
 
 (defn binary-op [& ops]
   (m/do*
-    (op <- (reduce or-else (map string ops)))
-    (m/return
-      (let [kw (keyword (str (strip-location op)))]
-        (fn [env]
-          (if (contains? env kw)
-            (get env kw)
-            (throw (IllegalStateException.
-                     (str (name kw) " is not bound in environment")))))))))
+   (op <- (reduce or-else (map string ops)))
+   (m/return
+    (let [kw (keyword (str (strip-location op)))]
+      (fn [env]
+        (if (contains? env kw)
+          (get env kw)
+          (throw (IllegalStateException.
+                  (str (name kw) " is not bound in environment")))))))))
 
 (def mulop (binary-op "*" "/" "÷" "**" "%" ">>" ">>>" "<<" "=" "==" "!="))
 (def addop (binary-op "+" "-" "|" "&"))
@@ -171,19 +171,19 @@
 
 (defn- binary-reducer [op-parser arg-parser]
   (m/do*
-    (a1 <- arg-parser)
-    (rst <- (many
-              (m/do*
-                spaces
-                (op <- (token op-parser))
-                (a2 <- arg-parser)
-                (m/return [op a2]))))
-    (m/return
-      (fn [env]
-        (reduce
-          (fn [acc [op a2]] ((op env) acc (resolve-var a2 env)))
-          (resolve-var a1 env)
-          rst)))))
+   (a1 <- arg-parser)
+   (rst <- (many
+            (m/do*
+             spaces
+             (op <- (token op-parser))
+             (a2 <- arg-parser)
+             (m/return [op a2]))))
+   (m/return
+    (fn [env]
+      (reduce
+       (fn [acc [op a2]] ((op env) acc (resolve-var a2 env)))
+       (resolve-var a1 env)
+       rst)))))
 
 (def term (binary-reducer mulop factor))
 

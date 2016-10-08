@@ -22,9 +22,9 @@
 
 (ns infix.core-tests
   (:require
-    [clojure.test :refer :all]
-    [infix.macros :refer [infix]]
-    [infix.core :refer [suppress!]]))
+   [clojure.test :refer :all]
+   [infix.macros :refer [infix]]
+   [infix.core :refer [suppress!]]))
 
 (suppress! 'e)
 
