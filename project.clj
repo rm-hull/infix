@@ -1,4 +1,4 @@
-(defproject rm-hull/infix "0.2.10"
+(defproject rm-hull/infix "0.2.11"
   :description "A small Clojure library for expressing LISP expressions as infix rather than prefix notation"
   :url "https://github.com/rm-hull/infix"
   :license {
