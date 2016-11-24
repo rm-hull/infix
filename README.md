@@ -6,7 +6,7 @@
 [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/infix.svg)](https://clojars.org/rm-hull/infix)
 [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg?maxAge=2592000)]()
 
-A small Clojure/ClojureScript library for representing LISP expressions in infix
+A small Clojure library for representing LISP expressions in infix
 rather than prefix notation... sometimes it's easier to rely on operator precedence,
 instead of LISP's insistence on parentheses – this is especially true when dealing
 with mathematical equations.
