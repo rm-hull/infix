@@ -116,7 +116,14 @@
 
 (deftest check-division-precedence
   (let [x 0 y 1]
-    (is (= 0.0 (infix sin (x ÷ y ** 2))))))
+    (is (= 0.0 (infix sin (x ÷ y ** 2))))
+    (is (= 2 (infix 4 / 4 * 2)))
+    (is (= 2 (infix (4 / 4) * 2)))
+    (is (= 1/2 (infix 4 / (4 * 2))))
+    (is (= 0.5 (infix 4 / (4 * 2.0))))
+    (is (= 8 (infix 4 * 4 / 2)))
+    (is (= 8 (infix (4 * 4) / 2)))
+    (is (= 8 (infix 4 * (4 / 2))))))
 
 (deftest check-equality
   (is (true? (infix 5 = 5)))
