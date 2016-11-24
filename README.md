@@ -99,6 +99,16 @@ file an [issue](https://github.com/rm-hull/infix/issues/new).
 ; => (+ (Math/sin (* 2 t)) (* 3 (Math/cos (* 4 t))))
 ```
 
+### Usage in ClojureScript projects
+
+The `infix` macro may be used to expand infix expressions in ClojureScript code
+by adding the require-macros directive to a namespace, for example:
+
+```clojure
+(ns my.clojurescript.project
+  (:require-macros [infix.macros :refer [infix]]))
+```
+
 ### Evaluating infix expressions dynamically from a string
 
 A function can created at runtime from an expression held in a string as
