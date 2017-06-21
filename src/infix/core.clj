@@ -84,7 +84,7 @@
   [;; binary operators
    'or 'and 'bit-or 'bit-xor 'bit-and 'not= '= '== '>= '> '<= '<
    'unsigned-bit-shift-right 'bit-shift-right 'bit-shift-left
-   '- '+ '* '/ 'infix.math.core/divide 'Math/pow 'mod
+   '+ '- '* '/ 'infix.math.core/divide 'Math/pow 'mod
 
    ;; unary operators
    'not
