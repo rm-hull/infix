@@ -34,7 +34,9 @@
   (is (= 0 (infix (3 - 2) - 1)))
   (is (= 0 (infix 3 - 2 - 1)))
   (is (= 5 (infix 3 + 2 % 3)))
-  (is (= 2 (infix (3 + 2) % 3))))
+  (is (= 2 (infix (3 + 2) % 3)))
+  (is (= 1 (infix 1 - 1 + 1)))
+  (is (= 2 (infix 1 - 2 + 3))))
 
 (deftest check-aliasing
   (is (= 5.0 (infix √ (5 * 5))))
@@ -67,6 +69,8 @@
   (is (= 5 ((from-string "5"))))
   (is (= 10 ((from-string "5 * 2"))))
   (is (= 7 ((from-string "5 + 2"))))
+  (is (= 1 ((from-string "1 - 1 + 1"))))
+  (is (= 2 ((from-string "1 - 2 + 3"))))
   (is (= 7 ((from-string [x] "x + 3") 4)))
   (is (= 1 ((from-string [x] {:+ -} "x + 3") 4)))
   (is (= 7 ((from-string [] {:x 6 :+ +} "x + 1"))))
