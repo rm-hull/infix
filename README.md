@@ -43,7 +43,7 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>rm-hull</groupId>
   <artifactId>infix</artifactId>
-  <version>0.2.11</version>
+  <version>0.2.12</version>
 </dependency>
 ```
 
@@ -64,7 +64,7 @@ See [www.destructuring-bind.org/infix](http://www.destructuring-bind.org/infix/)
 ; => 64
 ```
 
-You can also use `$=` as a short alias for `infix` like this, for example:
+You can also use `$=` as a short alias for `infix`, like this, for example:
 ```clojure
 (refer 'infix.macros :only '[$=])
 ; => nil
