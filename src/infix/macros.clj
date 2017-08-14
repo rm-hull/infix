@@ -36,6 +36,13 @@
    (map resolve-alias)
    rewrite))
 
+;; Short alias for infix
+(defmacro $=
+  "Takes an infix expression, resolves an aliases before rewriting the
+   infix expressions into standard LISP prefix expressions."
+  [& expr]
+  `(infix ~@expr))
+
 (defn- binding-vars [bindings]
   (->>
    bindings
