@@ -34,7 +34,7 @@ There is a version hosted at [Clojars](https://clojars.org/rm-hull/infix).
 For leiningen include a dependency:
 
 ```clojure
-[rm-hull/infix "0.2.11"]
+[rm-hull/infix "0.2.12"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -63,6 +63,17 @@ See [www.destructuring-bind.org/infix](http://www.destructuring-bind.org/infix/)
 (infix (3 + 5) * 8)
 ; => 64
 ```
+
+You can also use `$=` as a short alias for `infix` like this, for example:
+```clojure
+(refer 'infix.macros :only '[$=])
+; => nil
+
+($= 3 + 5 * 8)
+; => 43
+```
+
+All of the examples below should work if you replace `infix` by `$=`.
 
 Some `Math` functions have been aliased (see [below](#aliased-operators--functions)
 for full list), so nullary and unary-argument functions can be used as follows:
