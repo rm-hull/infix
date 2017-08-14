@@ -64,7 +64,7 @@ See [www.destructuring-bind.org/infix](http://www.destructuring-bind.org/infix/)
 ; => 64
 ```
 
-You can also use `$=` as a short alias for `infix`, like this, for example:
+You can also use `$=` as a short alias for `infix`, like this for example:
 ```clojure
 (refer 'infix.macros :only '[$=])
 ; => nil
