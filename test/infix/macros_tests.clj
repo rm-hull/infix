@@ -23,7 +23,7 @@
 (ns infix.macros-tests
   (:require
    [clojure.test :refer :all]
-   [infix.macros :refer [infix from-string]]))
+   [infix.macros :refer [infix $= from-string]]))
 
 (def ε 0.0000001)
 
@@ -38,7 +38,24 @@
   (is (= 1 (infix 1 - 1 + 1)))
   (is (= 2 (infix 1 - 2 + 3))))
 
+(deftest basic-arithmetic-$=
+  (is (= (+ 3 4) ($= 3 + 4)))
+  (is (= 43 ($= 3 + 5 * 8)))
+  (is (= 64 ($= (3 + 5) * 8)))
+  (is (= 0 ($= (3 - 2) - 1)))
+  (is (= 0 ($= 3 - 2 - 1)))
+  (is (= 5 ($= 3 + 2 % 3)))
+  (is (= 2 ($= (3 + 2) % 3)))
+  (is (= 1 ($= 1 - 1 + 1)))
+  (is (= 2 ($= 1 - 2 + 3))))
+
 (deftest check-aliasing
+  (is (= 5.0 (infix √ (5 * 5))))
+  (is (= 2 (infix 5 % 3)))
+  (let [t 0.324]
+    (is (> ε (Math/abs (- (infix sin (2 * t) + 3 * cos (4 * t)) 1.4176457261295824))))))
+
+(deftest check-aliasing-$=
   (is (= 5.0 (infix √ (5 * 5))))
   (is (= 2 (infix 5 % 3)))
   (let [t 0.324]
