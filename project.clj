@@ -1,4 +1,4 @@
-(defproject rm-hull/infix "0.2.12"
+(defproject rm-hull/infix "0.3.0"
   :description "A small Clojure library for expressing LISP expressions as infix rather than prefix notation"
   :url "https://github.com/rm-hull/infix"
   :license {
@@ -21,7 +21,7 @@
       :global-vars {*warn-on-reflection* true}
       :plugins [
         [lein-codox "0.10.3"]
-        [lein-cljfmt "0.5.6"]
+        [lein-cljfmt "0.5.7"]
         [lein-cloverage "1.0.9"]]
       :dependencies [
         [org.clojure/clojure "1.8.0"]
