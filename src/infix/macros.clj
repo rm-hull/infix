@@ -28,7 +28,7 @@
    [infix.grammar :refer [expression]]))
 
 (defmacro infix
-  "Takes an infix expression, resolves an aliases before rewriting the
+  "Takes an infix expression, resolves any aliases before rewriting the
    infix expressions into standard LISP prefix expressions."
   [& expr]
   (->>
@@ -38,7 +38,7 @@
 
 ;; Short alias for infix
 (defmacro $=
-  "Takes an infix expression, resolves an aliases before rewriting the
+  "Takes an infix expression, resolves any aliases before rewriting the
    infix expressions into standard LISP prefix expressions."
   [& expr]
   `(infix ~@expr))
