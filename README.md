@@ -147,9 +147,9 @@ equivalent to creating the  following function:
     (infix sqrt(x ** 2 + y ** 2))))
 ```
 
-However, it does so without recourse to `eval` and `read-string` - instead it is 
-built using our [old friend](https://github.com/rm-hull/jasentaa), the monadic 
-parser-combinator, with an EBNF grammar (implementing the infix notation) and a 
+However, it does so without recourse to `eval` and `read-string` - instead it is
+built using our [old friend](https://github.com/rm-hull/jasentaa), the monadic
+parser-combinator, with an EBNF grammar (implementing the infix notation) and a
 restricted base environment of math functions, as outlined in the next section.
 
 The `base-env` may be extended with any number of key/value pairs (where keys
