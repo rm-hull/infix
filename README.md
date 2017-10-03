@@ -147,12 +147,10 @@ equivalent to creating the  following function:
     (infix sqrt(x ** 2 + y ** 2))))
 ```
 
-However, it does so without recourse to `eval` and `read-string` - instead it is built using our
-[old](https://github.com/rm-hull/ods-search-appliance/blob/master/src/odessa/parser.clj)
-[friend](https://github.com/rm-hull/wam/blob/master/src/wam/parser.clj), the
-monadic parser-combinator, with an EBNF grammar (implementing the infix notation)
-and a restricted base environment of math functions, as outlined in the next
-section.
+However, it does so without recourse to `eval` and `read-string` - instead it is 
+built using our [old friend](https://github.com/rm-hull/jasentaa), the monadic 
+parser-combinator, with an EBNF grammar (implementing the infix notation) and a 
+restricted base environment of math functions, as outlined in the next section.
 
 The `base-env` may be extended with any number of key/value pairs (where keys
 are keywords) and values may either be values or functions, to provide
