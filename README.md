@@ -34,7 +34,7 @@ There is a version hosted at [Clojars](https://clojars.org/rm-hull/infix).
 For leiningen include a dependency:
 
 ```clojure
-[rm-hull/infix "0.3.0"]
+[rm-hull/infix "0.3.1"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
