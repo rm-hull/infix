@@ -204,7 +204,7 @@ referenced in a subsequent function definition:
 | &       | bit-and                 |   | √      | Math/sqrt       |   | tanh   | Math/tanh       |
 | \|      | bit-or                  |   | root   | b √ a           |   | sec    | Secant          |
 |         |                         |   | φ      | Golden ratio    |   | csc    | Cosecant        |
-| gcd     | Greatest common divsor  |   | fact   | Factorial       |   | cot    | Cotangent       |
+| gcd     | Greatest common divisor |   | fact   | Factorial       |   | cot    | Cotangent       |
 | lcm     | Least common multiple   |   | ∑      | Sum             |   | asec   | Arcsecant       |
 | rand    | Random number generator |   | ∏      | Product         |   | acsc   | Arccosecant     |
 | randInt | Random int between 0..n |   |        |                 |   | acot   | Arccotangent    |
