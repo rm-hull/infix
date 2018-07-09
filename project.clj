@@ -5,7 +5,7 @@
     :name "The MIT License (MIT)"
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [
-    [rm-hull/jasentaa "0.2.4"]]
+    [rm-hull/jasentaa "0.2.5"]]
   :scm {:url "git@github.com:rm-hull/infix.git"}
   :vcs :git
   :source-paths ["src"]
@@ -20,9 +20,9 @@
     :dev {
       :global-vars {*warn-on-reflection* true}
       :plugins [
-        [lein-codox "0.10.3"]
+        [lein-codox "0.10.4"]
         [lein-cljfmt "0.5.7"]
-        [lein-cloverage "1.0.10"]]
+        [lein-cloverage "1.0.11"]]
       :dependencies [
         [org.clojure/clojure "1.9.0"]
         [google-analytics-codox-theme "0.1.0"]]}})
