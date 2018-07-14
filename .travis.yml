@@ -8,7 +8,7 @@ install:
   - npm install
 before_script:
   - npm install -g eclint
-  - eclint check .* * src/** test/**
+  - eclint check $(git ls-files)
   - lein install
   - lein cljfmt check
 script:
