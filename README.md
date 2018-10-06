@@ -1,8 +1,8 @@
 # Infix
 [![Build Status](https://travis-ci.org/rm-hull/infix.svg?branch=master)](http://travis-ci.org/rm-hull/infix)
 [![Coverage Status](https://coveralls.io/repos/rm-hull/infix/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/infix?branch=master)
-[![Dependencies Status](https://jarkeeper.com/rm-hull/infix/status.svg)](https://jarkeeper.com/rm-hull/infix)
-[![Downloads](https://jarkeeper.com/rm-hull/infix/downloads.svg)](https://jarkeeper.com/rm-hull/infix)
+[![Dependencies Status](https://versions.deps.co/rm-hull/infix/status.svg)](https://versions.deps.co/rm-hull/infix)
+[![Downloads](https://versions.deps.co/rm-hull/infix/downloads.svg)](https://versions.deps.co/rm-hull/infix)
 [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/infix.svg)](https://clojars.org/rm-hull/infix)
 [![Maintenance](https://img.shields.io/maintenance/yes/2018.svg?maxAge=2592000)]()
 
