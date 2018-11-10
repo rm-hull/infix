@@ -15,14 +15,14 @@
     :output-path "doc/api"
     :source-uri "http://github.com/rm-hull/infix/blob/master/{filepath}#L{line}"
     :themes [:default [:google-analytics {:tracking-code "UA-39680853-6" }]]}
-  :min-lein-version "2.6.1"
+  :min-lein-version "2.8.1"
   :profiles {
     :dev {
       :global-vars {*warn-on-reflection* true}
       :plugins [
-        [lein-codox "0.10.4"]
-        [lein-cljfmt "0.5.7"]
-        [lein-cloverage "1.0.11"]]
+        [lein-codox "0.10.5"]
+        [lein-cljfmt "0.6.1"]
+        [lein-cloverage "1.0.13"]]
       :dependencies [
         [org.clojure/clojure "1.9.0"]
         [google-analytics-codox-theme "0.1.0"]]}})
