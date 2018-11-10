@@ -12,6 +12,11 @@
   :jar-exclusions [#"(?:^|/).git"]
   :codox {
     :source-paths ["src"]
+    :doc-files [
+      "doc/basic-usage.md"
+      "doc/references.md"
+      "LICENSE.md"
+    ]
     :output-path "doc/api"
     :source-uri "http://github.com/rm-hull/infix/blob/master/{filepath}#L{line}"
     :themes [:default [:google-analytics {:tracking-code "UA-39680853-6" }]]}
