@@ -4,7 +4,7 @@
 [![Dependencies Status](https://versions.deps.co/rm-hull/infix/status.svg)](https://versions.deps.co/rm-hull/infix)
 [![Downloads](https://versions.deps.co/rm-hull/infix/downloads.svg)](https://versions.deps.co/rm-hull/infix)
 [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/infix.svg)](https://clojars.org/rm-hull/infix)
-[![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000)]()
+[![Maintenance](https://img.shields.io/maintenance/yes/2021.svg?maxAge=2592000)]()
 
 A small Clojure library for representing LISP expressions in infix
 rather than prefix notation... sometimes it's easier to rely on operator precedence,
