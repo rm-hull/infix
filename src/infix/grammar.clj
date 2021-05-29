@@ -29,9 +29,11 @@
 
 ; expression ::= term { addop term }.
 ; term ::= factor { mulop factor }.
-; factor ::= "(" expression ")" | var | number | function.
+; factor ::= base { expop base }
+; base ::= "(" expression ")" | var | number | function.
 ; addop ::= "+" | "-".
 ; mulop ::= "*" | "/".
+; expop ::= "**"
 ;
 ; function ::= envref expression | envref "(" <empty> | expression { "," expression } ")".
 ; envref ::= letter { letter | digit | "_" }.
@@ -138,7 +140,7 @@
                  (f env)
                  (map #(% env) args)))))))
 
-(def factor
+(def base
   (any-of
    (m/do*
     (symb "(")
@@ -160,7 +162,8 @@
           (throw (IllegalStateException.
                   (str (name kw) " is not bound in environment")))))))))
 
-(def mulop (binary-op "*" "/" "÷" "**" "%" ">>" ">>>" "<<" "=" "==" "!="))
+(def expop (binary-op "**"))
+(def mulop (binary-op "*" "/" "÷" "%" ">>" ">>>" "<<" "=" "==" "!="))
 (def addop (binary-op "+" "-" "|" "&"))
 
 (defn- resolve-var [arg env]
@@ -184,6 +187,8 @@
        (fn [acc [op a2]] ((op env) acc (resolve-var a2 env)))
        (resolve-var a1 env)
        rst)))))
+
+(def factor (binary-reducer expop base))
 
 (def term (binary-reducer mulop factor))
 
