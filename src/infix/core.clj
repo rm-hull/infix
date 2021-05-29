@@ -138,6 +138,9 @@
             (list (rewrite (first infix-expr)))
             (list (rewrite (first infix-expr)) (rewrite (next infix-expr)))))))))
 
+(defn- logical-or [a b] (or a b))
+(defn- logical-and [a b] (and a b))
+
 (def base-env
   (merge
     ; wrapped java.lang.Math constants & functions
@@ -156,4 +159,6 @@
     :- -
     :* *
     :/ /
-    :% mod}))
+    :% mod
+    :&& logical-and
+    :|| logical-or}))

@@ -30,7 +30,7 @@
 ; expression ::= term { addop term }.
 ; term ::= factor { mulop factor }.
 ; factor ::= base { expop base }
-; base ::= "(" expression ")" | var | number | function.
+; base ::= "(" expression ")" | boolean | number | var | function.
 ; addop ::= "+" | "-".
 ; mulop ::= "*" | "/".
 ; expop ::= "**"
@@ -38,6 +38,7 @@
 ; function ::= envref expression | envref "(" <empty> | expression { "," expression } ")".
 ; envref ::= letter { letter | digit | "_" }.
 ; var ::= envref.
+; boolean :: = "true" | "false"
 ; number ::= integer | decimal | rational | binary | hex
 ; binary :: = [ "-" ] "0b" { "0" | "1" }.
 ; hex :: = [ "-" ] "0x" | "#" { "0" | ... | "9" | "A" | ... | "F" | "a" | ... | "f" }.
@@ -117,6 +118,11 @@
 (def number
   (any-of integer decimal rational binary hex))
 
+(def boolean
+  (m/do*
+   (value <- (any-of (string "true") (string "false")))
+   (m/return (constantly (Boolean/parseBoolean (str (strip-location value)))))))
+
 (defn list-of [parser]
   (optional (separated-by (token parser) (symb ","))))
 
@@ -147,8 +153,9 @@
     (e <- expression)
     (symb ")")
     (m/return e))
-   var
+   boolean
    number
+   var
    function))
 
 (defn binary-op [& ops]
@@ -164,7 +171,7 @@
 
 (def expop (binary-op "**"))
 (def mulop (binary-op "*" "/" "÷" "%" ">>" ">>>" "<<" "=" "==" "!="))
-(def addop (binary-op "+" "-" "|" "&"))
+(def addop (binary-op "+" "-" "|" "&" "||" "&&"))
 
 (defn- resolve-var [arg env]
   (let [v (arg env)]

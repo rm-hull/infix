@@ -106,6 +106,7 @@
   (is (= 5 ((from-string [f] "f() + 2") (fn [] 3))))
   (is (true? (<= 0 ((from-string "rand() * 10")) 10)))
   (is (true? (<= 0 ((from-string "randInt(10)")) 10)))
+  (is (true? (<= 0 ((from-string [n] "randInt(n)") 5) 5)))
   (is (= 25.0 ((from-string "pow(5,2)"))))
   (is (= 0.1411200080598672 ((from-string "sin(3)"))))
   (is (= 0.1411200080598672 ((from-string "sin 3"))))
@@ -114,6 +115,15 @@
   (is (= 15 ((from-string [e] "e * 3") 5)))
   (is (= 19624.068163608234 ((from-string [e] "e ** (3 + pi)") 5)))
   (is (= 384.2880400203104 ((from-string [x] "product(e, pi, 3 * 3, x)") 5)))
+  (is (= true ((from-string "16 = 16"))))
+  (is (= true ((from-string "16 == 16"))))
+  (is (= true ((from-string "16 != 17"))))
+  (is (= 48 ((from-string "16 | 32"))))
+  (is (= true ((from-string "false || true"))))
+  (is (= false ((from-string "false || false"))))
+  (is (= 16 ((from-string "16 & 48"))))
+  (is (= false ((from-string "true && false"))))
+  (is (= true ((from-string "true && true"))))
   (is (thrown-with-msg? java.text.ParseException #"Failed to parse text at line: 1, col: 3\nx \+ \n  \^"
                         ((from-string [x] "x + ") 3)))
   (is (thrown-with-msg? java.text.ParseException #"Failed to parse text at line: 1, col: 8\nx\+\(y\*7\)\)\n       \^"
