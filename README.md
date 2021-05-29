@@ -54,7 +54,7 @@ See [www.destructuring-bind.org/infix](http://www.destructuring-bind.org/infix/)
 ## Basic Usage
 
 ```clojure
-(refer 'infix.macros :only '[infix from-string base-env])
+(use 'infix.macros)
 ; => nil
 
 (infix 3 + 5 * 8)
