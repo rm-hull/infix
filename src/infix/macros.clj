@@ -62,9 +62,10 @@
      (throw (IllegalArgumentException. "Binding variables is not a vector"))
 
      :else
-     (let [b# (binding-vars bindings)]
+     (let [b# (binding-vars bindings)
+           p# (mapv keyword bindings)]
        `(if-let [f# (parse-all expression ~expr)]
           (with-meta
             (fn [~@(vals b#)]
               (f# (merge ~env ~b#)))
-            {:doc ~expr}))))))
+            {:doc ~expr :params ~p#}))))))

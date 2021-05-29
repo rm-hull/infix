@@ -165,3 +165,9 @@
   (is (true? (infix 5 == 5.0)))
   (is (true? (infix 5 != 3)))
   (is (true? (infix 5 not= 4))))
+
+(deftest check-meta
+  (let [hypot (from-string [x y] "sqrt(x**2 + y**2)")
+        no-params (from-string "1 + 2")]
+    (is (= {:params [:x :y] :doc "sqrt(x**2 + y**2)"} (meta hypot))
+        (is (= {:params [] :doc "1 + 2"} (meta no-params))))))

@@ -135,6 +135,9 @@ expression, for example:
 
 (hypot 3 4)
 ; => 5
+
+(meta hypot)
+; => {:params [:x :y], :doc "sqrt(x**2 + y**2)"}
 ```
 
 `from-string` is deliberately designed to _look_ like an anonymous function
