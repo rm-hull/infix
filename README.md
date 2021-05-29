@@ -219,17 +219,23 @@ as follows:
 
 * _**&lt;term&gt;** ::= factor { mulop factor }._
 
-* _**&lt;factor&gt;** ::= "(" expression ")" | var | number | function._
+* _**&lt;factor&gt;** ::= base { expop base }._
 
-* _**&lt;addop&gt;** ::= "+" | "-" | "|" | "&"._
+* _**&lt;base&gt;** ::= "(" expression ")" | boolean | number | var | function._
 
-* _**&lt;mulop&gt;** ::= "\*" | "/" | "÷" | "\*\*" | "%" | ">>" | ">>>" | "<<"._
+* _**&lt;addop&gt;** ::= "+" | "-" | "|" | "&" | "||" | "&&"._
+
+* _**&lt;mulop&gt;** ::= "\*" | "/" | "÷" | "%" | ">>" | ">>>" | "<<"._
+
+* _**&lt;expop&gt;** ::= "\*\*" ._
 
 * _**&lt;function&gt;** ::= envref expression | envref "(" &lt;empty&gt; | expression { "," expression } ")"._
 
 * _**&lt;envref&gt;** ::= letter { letter | digit | "_" }._
 
 * _**&lt;var&gt;** ::= envref._
+
+* _**&lt;boolean&gt;** ::= "true" | "false"_
 
 * _**&lt;number&gt;** ::= integer | decimal | rational | binary | hex_
 
