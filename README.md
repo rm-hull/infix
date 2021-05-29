@@ -1,5 +1,5 @@
 # Infix
-[![Build Status](https://travis-ci.org/rm-hull/infix.svg?branch=master)](http://travis-ci.org/rm-hull/infix)
+[![Build Status](https://github.com/rm-hull/infix/actions/workflows/clojure.yml/badge.svg)](https://github.com/rm-hull/infix/actions/workflows/clojure.yml)
 [![Coverage Status](https://coveralls.io/repos/rm-hull/infix/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/infix?branch=master)
 [![Dependencies Status](https://versions.deps.co/rm-hull/infix/status.svg)](https://versions.deps.co/rm-hull/infix)
 [![Downloads](https://versions.deps.co/rm-hull/infix/downloads.svg)](https://versions.deps.co/rm-hull/infix)
