@@ -1,4 +1,5 @@
 # Infix
+
 [![Build Status](https://github.com/rm-hull/infix/actions/workflows/clojure.yml/badge.svg)](https://github.com/rm-hull/infix/actions/workflows/clojure.yml)
 [![Coverage Status](https://coveralls.io/repos/rm-hull/infix/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/infix?branch=master)
 [![Dependencies Status](https://versions.deps.co/rm-hull/infix/status.svg)](https://versions.deps.co/rm-hull/infix)
@@ -34,7 +35,7 @@ There is a version hosted at [Clojars](https://clojars.org/rm-hull/infix).
 For leiningen include a dependency:
 
 ```clojure
-[rm-hull/infix "0.3.3"]
+[rm-hull/infix "0.4.0"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -43,7 +44,7 @@ For maven-based projects, add the following to your `pom.xml`:
 <dependency>
   <groupId>rm-hull</groupId>
   <artifactId>infix</artifactId>
-  <version>0.3.3</version>
+  <version>0.4.0</version>
 </dependency>
 ```
 
@@ -65,6 +66,7 @@ See [www.destructuring-bind.org/infix](http://www.destructuring-bind.org/infix/)
 ```
 
 You can also use `$=` as a short alias for `infix`, like this for example:
+
 ```clojure
 (refer 'infix.macros :only '[$=])
 ; => nil
@@ -142,7 +144,7 @@ expression, for example:
 
 `from-string` is deliberately designed to _look_ like an anonymous function
 definition, mainly because that is more-or-less what it is. In effect, this is
-equivalent to creating the  following function:
+equivalent to creating the following function:
 
 ```clojure
 (def hypot
@@ -194,23 +196,23 @@ referenced in a subsequent function definition:
 
 ### Aliased Operators & Functions
 
-| Alias   | Operator                |   | Alias  | Operator        |   | Alias  | Operator        |
-|---------|-------------------------|---|--------|-----------------|---|--------|-----------------|
-| &&      | and                     |   | abs    | Math/abs        |   | sin    | Math/sin        |
-| \|\|    | or                      |   | signum | Math/signum     |   | cos    | Math/cos        |
-| ==      | =                       |   | **     | Math/pow        |   | tan    | Math/tan        |
-| !=      | not=                    |   | exp    | Math/exp        |   | asin   | Math/asin       |
-| %       | mod                     |   | log    | Math/log        |   | acos   | Math/acos       |
-| <<      | bit-shift-left          |   | e      | Math/E          |   | atan   | Math/atan       |
-| >>      | bit-shift-right         |   | π      | Math/PI         |   | sinh   | Math/sinh       |
-| !       | not                     |   | sqrt   | Math/sqrt       |   | cosh   | Math/cosh       |
-| &       | bit-and                 |   | √      | Math/sqrt       |   | tanh   | Math/tanh       |
-| \|      | bit-or                  |   | root   | b √ a           |   | sec    | Secant          |
-|         |                         |   | φ      | Golden ratio    |   | csc    | Cosecant        |
-| gcd     | Greatest common divisor |   | fact   | Factorial       |   | cot    | Cotangent       |
-| lcm     | Least common multiple   |   | ∑      | Sum             |   | asec   | Arcsecant       |
-| rand    | Random number generator |   | ∏      | Product         |   | acsc   | Arccosecant     |
-| randInt | Random int between 0..n |   |        |                 |   | acot   | Arccotangent    |
+| Alias   | Operator                |     | Alias  | Operator        |     | Alias | Operator        |
+| ------- | ----------------------- | --- | ------ | --------------- | --- | ----- | --------------- |
+| &&      | and                     |     | abs    | Math/abs        |     | sin   | Math/sin        |
+| \|\|    | or                      |     | signum | Math/signum     |     | cos   | Math/cos        |
+| ==      | =                       |     | \*\*   | Math/pow        |     | tan   | Math/tan        |
+| !=      | not=                    |     | exp    | Math/exp        |     | asin  | Math/asin       |
+| %       | mod                     |     | log    | Math/log        |     | acos  | Math/acos       |
+| <<      | bit-shift-left          |     | e      | Math/E          |     | atan  | Math/atan       |
+| >>      | bit-shift-right         |     | π      | Math/PI         |     | sinh  | Math/sinh       |
+| !       | not                     |     | sqrt   | Math/sqrt       |     | cosh  | Math/cosh       |
+| &       | bit-and                 |     | √      | Math/sqrt       |     | tanh  | Math/tanh       |
+| \|      | bit-or                  |     | root   | b √ a           |     | sec   | Secant          |
+|         |                         |     | φ      | Golden ratio    |     | csc   | Cosecant        |
+| gcd     | Greatest common divisor |     | fact   | Factorial       |     | cot   | Cotangent       |
+| lcm     | Least common multiple   |     | ∑      | Sum             |     | asec  | Arcsecant       |
+| rand    | Random number generator |     | ∏      | Product         |     | acsc  | Arccosecant     |
+| randInt | Random int between 0..n |     |        |                 |     | acot  | Arccotangent    |
 
 ## EBNF Grammar Rules
 
@@ -218,49 +220,49 @@ The `from-string` macro parses infix expressions based on the EBNF
 [grammar rules](https://github.com/rm-hull/infix/blob/master/src/infix/grammar.clj)
 as follows:
 
-* _**&lt;expression&gt;** ::= term { addop term }._
+- _**&lt;expression&gt;** ::= term { addop term }._
 
-* _**&lt;term&gt;** ::= factor { mulop factor }._
+- _**&lt;term&gt;** ::= factor { mulop factor }._
 
-* _**&lt;factor&gt;** ::= base { expop base }._
+- _**&lt;factor&gt;** ::= base { expop base }._
 
-* _**&lt;base&gt;** ::= "(" expression ")" | boolean | number | var | function._
+- _**&lt;base&gt;** ::= "(" expression ")" | boolean | number | var | function._
 
-* _**&lt;addop&gt;** ::= "+" | "-" | "|" | "&" | "||" | "&&"._
+- _**&lt;addop&gt;** ::= "+" | "-" | "|" | "&" | "||" | "&&"._
 
-* _**&lt;mulop&gt;** ::= "\*" | "/" | "÷" | "%" | ">>" | ">>>" | "<<"._
+- _**&lt;mulop&gt;** ::= "\*" | "/" | "÷" | "%" | ">>" | ">>>" | "<<"._
 
-* _**&lt;expop&gt;** ::= "\*\*" ._
+- _**&lt;expop&gt;** ::= "\*\*" ._
 
-* _**&lt;function&gt;** ::= envref expression | envref "(" &lt;empty&gt; | expression { "," expression } ")"._
+- _**&lt;function&gt;** ::= envref expression | envref "(" &lt;empty&gt; | expression { "," expression } ")"._
 
-* _**&lt;envref&gt;** ::= letter { letter | digit | "_" }._
+- _**&lt;envref&gt;** ::= letter { letter | digit | "_" }.\_
 
-* _**&lt;var&gt;** ::= envref._
+- _**&lt;var&gt;** ::= envref._
 
-* _**&lt;boolean&gt;** ::= "true" | "false"_
+- _**&lt;boolean&gt;** ::= "true" | "false"_
 
-* _**&lt;number&gt;** ::= integer | decimal | rational | binary | hex_
+- _**&lt;number&gt;** ::= integer | decimal | rational | binary | hex_
 
-* _**&lt;binary&gt;** :: = [ "-" ] "0b" { "0" | "1" }._
+- _**&lt;binary&gt;** :: = [ "-" ] "0b" { "0" | "1" }._
 
-* _**&lt;hex&gt;** :: = [ "-" ] "0x" | "#" { "0" | ... | "9" | "A" | ... | "F" | "a" | ... | "f" }._
+- _**&lt;hex&gt;** :: = [ "-" ] "0x" | "#" { "0" | ... | "9" | "A" | ... | "F" | "a" | ... | "f" }._
 
-* _**&lt;integer&gt;** :: = [ "-" ] digits._
+- _**&lt;integer&gt;** :: = [ "-" ] digits._
 
-* _**&lt;decimal&gt;** :: = [ "-" ] digits "." digits._
+- _**&lt;decimal&gt;** :: = [ "-" ] digits "." digits._
 
-* _**&lt;rational&gt;** :: = integer "/" digits._
+- _**&lt;rational&gt;** :: = integer "/" digits._
 
-* _**&lt;letter&gt;** ::= "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"._
+- _**&lt;letter&gt;** ::= "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"._
 
-* _**&lt;digit&gt;** ::= "0" | "1" | ... | "8" | "9"._
+- _**&lt;digit&gt;** ::= "0" | "1" | ... | "8" | "9"._
 
-* _**&lt;digits&gt;** ::= digit { digit }._
+- _**&lt;digits&gt;** ::= digit { digit }._
 
 ## References
 
-* https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages
+- https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages
 
 ## License
 
