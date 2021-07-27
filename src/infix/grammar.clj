@@ -21,6 +21,7 @@
 ;; SOFTWARE.
 
 (ns infix.grammar
+  (:refer-clojure :exclude [boolean])
   (:require
    [jasentaa.monad :as m]
    [jasentaa.position :refer [strip-location]]

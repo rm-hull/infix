@@ -21,6 +21,7 @@
 ;; SOFTWARE.
 
 (ns infix.grammar-test
+  (:refer-clojure :exclude [boolean])
   (:require
    [clojure.test :refer :all]
    [jasentaa.parser :as p :refer [parse-all]]
