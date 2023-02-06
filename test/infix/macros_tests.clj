@@ -166,6 +166,14 @@
   (is (true? (infix 5 != 3)))
   (is (true? (infix 5 not= 4))))
 
+(deftest check-comparison
+  (is (true? (infix 3 < 5)))
+  (is (false? (infix 3 > 5)))
+  (is (true? (infix 3 <= 5)))
+  (is (false? (infix 3 >= 5)))
+  (is (true? (infix 3 >= 3)))
+  (is (true? (infix 3 <= 3))))
+
 (deftest check-meta
   (let [hypot (from-string [x y] "sqrt(x**2 + y**2)")
         no-params (from-string "1 + 2")]

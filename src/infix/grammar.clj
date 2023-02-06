@@ -171,7 +171,7 @@
                   (str (name kw) " is not bound in environment")))))))))
 
 (def expop (binary-op "**"))
-(def mulop (binary-op "*" "/" "÷" "%" ">>" ">>>" "<<" "=" "==" "!="))
+(def mulop (binary-op "*" "/" "÷" "%" ">>" ">>>" "<<" "=" "==" "!=" ">" "<" ">=" "<="))
 (def addop (binary-op "+" "-" "|" "&" "||" "&&"))
 
 (defn- resolve-var [arg env]
