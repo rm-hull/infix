@@ -31,12 +31,13 @@
 ; expression ::= term { addop term }.
 ; term ::= factor { mulop factor }.
 ; factor ::= base { expop base }
-; base ::= "(" expression ")" | boolean | number | var | function.
+; base ::= "(" expression ")" | boolean | number | var | function | ternary.
 ; addop ::= "+" | "-".
 ; mulop ::= "*" | "/".
 ; expop ::= "**"
 ;
 ; function ::= envref expression | envref "(" <empty> | expression { "," expression } ")".
+; ternary ::= expression "?" expression ":" expression.
 ; envref ::= letter { letter | digit | "_" }.
 ; var ::= envref.
 ; boolean :: = "true" | "false"
@@ -147,6 +148,18 @@
                  (f env)
                  (map #(% env) args)))))))
 
+(def ternary-op
+  (m/do*
+   (condition <- expression)
+   (symb "?")
+   (yes-exp <- expression)
+   (symb ":")
+   (no-exp <- expression)
+   (m/return (fn [env]
+               (if (condition env) (yes-exp env) (no-exp env))))
+   )
+  )
+
 (def base
   (any-of
    (m/do*
@@ -157,7 +170,8 @@
    boolean
    number
    var
-   function))
+   function
+   ternary-op))
 
 (defn binary-op [& ops]
   (m/do*
