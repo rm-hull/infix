@@ -150,7 +150,9 @@
 
 (def ternary-op
   (m/do*
+   (symb "(")
    (condition <- expression)
+   (symb ")")
    (symb "?")
    (yes-exp <- expression)
    (symb ":")

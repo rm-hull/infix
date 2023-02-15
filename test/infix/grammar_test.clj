@@ -118,9 +118,9 @@
 
 (deftest check-ternary-op
   (let [env (merge base-env {:t 150 :x 10 :y 20})]
-    (is (= 1 ((parse-all ternary-op "t > 100 ? 1 : 0") env)))
-    (is (= -10 ((parse-all ternary-op "t < 100 ? x + y : x - y") env)))
-    (is (= 30 ((parse-all ternary-op "sum(x, y) >= 30 ? sum(x, y) : 0") env)))))
+    (is (= 1 ((parse-all ternary-op "(t > 100) ? 1 : 0") env)))
+    (is (= -10 ((parse-all ternary-op "(t < 100) ? x + y : x - y") env)))
+    (is (= 30 ((parse-all ternary-op "(sum(x, y) >= 30) ? sum(x, y) : 0") env)))))
 
 (deftest check-baseenv-functions
   (is (= 16 ((parse-all expression "9 + 7") base-env)))
