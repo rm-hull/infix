@@ -238,7 +238,7 @@ as follows:
 
 - _**&lt;function&gt;** ::= envref expression | envref "(" &lt;empty&gt; | expression { "," expression } ")"._
 
-- _**&lt;ternary&gt;** ::= expression "?" expression ":" expression._
+- _**&lt;ternary&gt;** ::= "(" expression ")" "?" expression ":" expression._
 
 - _**&lt;envref&gt;** ::= letter { letter | digit | "_" }.\_
 
