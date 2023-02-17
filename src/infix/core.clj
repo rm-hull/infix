@@ -161,4 +161,8 @@
     :/ /
     :% mod
     :&& logical-and
-    :|| logical-or}))
+    :|| logical-or
+    :> >
+    :< <
+    :>= >=
+    :<= <=}))

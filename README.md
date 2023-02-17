@@ -196,23 +196,25 @@ referenced in a subsequent function definition:
 
 ### Aliased Operators & Functions
 
-| Alias   | Operator                |     | Alias  | Operator        |     | Alias | Operator        |
-| ------- | ----------------------- | --- | ------ | --------------- | --- | ----- | --------------- |
-| &&      | and                     |     | abs    | Math/abs        |     | sin   | Math/sin        |
-| \|\|    | or                      |     | signum | Math/signum     |     | cos   | Math/cos        |
-| ==      | =                       |     | \*\*   | Math/pow        |     | tan   | Math/tan        |
-| !=      | not=                    |     | exp    | Math/exp        |     | asin  | Math/asin       |
-| %       | mod                     |     | log    | Math/log        |     | acos  | Math/acos       |
-| <<      | bit-shift-left          |     | e      | Math/E          |     | atan  | Math/atan       |
-| >>      | bit-shift-right         |     | π      | Math/PI         |     | sinh  | Math/sinh       |
-| !       | not                     |     | sqrt   | Math/sqrt       |     | cosh  | Math/cosh       |
-| &       | bit-and                 |     | √      | Math/sqrt       |     | tanh  | Math/tanh       |
-| \|      | bit-or                  |     | root   | b √ a           |     | sec   | Secant          |
-|         |                         |     | φ      | Golden ratio    |     | csc   | Cosecant        |
-| gcd     | Greatest common divisor |     | fact   | Factorial       |     | cot   | Cotangent       |
-| lcm     | Least common multiple   |     | ∑      | Sum             |     | asec  | Arcsecant       |
-| rand    | Random number generator |     | ∏      | Product         |     | acsc  | Arccosecant     |
-| randInt | Random int between 0..n |     |        |                 |     | acot  | Arccotangent    |
+| Alias   | Operator                |   | Alias  | Operator     |   | Alias | Operator     |
+|---------|-------------------------|---|--------|--------------|---|-------|--------------|
+| &&      | and                     |   | abs    | Math/abs     |   | sin   | Math/sin     |
+| \|\|    | or                      |   | signum | Math/signum  |   | cos   | Math/cos     |
+| ==      | =                       |   | \*\*   | Math/pow     |   | tan   | Math/tan     |
+| >       | >                       |   | <      | <            |   |       |              |
+| >=      | >=                      |   | <=     | <=           |   |       |              |
+| !=      | not=                    |   | exp    | Math/exp     |   | asin  | Math/asin    |
+| %       | mod                     |   | log    | Math/log     |   | acos  | Math/acos    |
+| <<      | bit-shift-left          |   | e      | Math/E       |   | atan  | Math/atan    |
+| >>      | bit-shift-right         |   | π      | Math/PI      |   | sinh  | Math/sinh    |
+| !       | not                     |   | sqrt   | Math/sqrt    |   | cosh  | Math/cosh    |
+| &       | bit-and                 |   | √      | Math/sqrt    |   | tanh  | Math/tanh    |
+| \|      | bit-or                  |   | root   | b √ a        |   | sec   | Secant       |
+|         |                         |   | φ      | Golden ratio |   | csc   | Cosecant     |
+| gcd     | Greatest common divisor |   | fact   | Factorial    |   | cot   | Cotangent    |
+| lcm     | Least common multiple   |   | ∑      | Sum          |   | asec  | Arcsecant    |
+| rand    | Random number generator |   | ∏      | Product      |   | acsc  | Arccosecant  |
+| randInt | Random int between 0..n |   |        |              |   | acot  | Arccotangent |
 
 ## EBNF Grammar Rules
 
@@ -235,6 +237,8 @@ as follows:
 - _**&lt;expop&gt;** ::= "\*\*" ._
 
 - _**&lt;function&gt;** ::= envref expression | envref "(" &lt;empty&gt; | expression { "," expression } ")"._
+
+- _**&lt;ternary&gt;** ::= "(" expression ")" "?" expression ":" expression._
 
 - _**&lt;envref&gt;** ::= letter { letter | digit | "_" }.\_
 
