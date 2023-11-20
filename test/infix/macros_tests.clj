@@ -89,6 +89,7 @@
   (is (= 1 ((from-string "1 - 1 + 1"))))
   (is (= 2 ((from-string "1 - 2 + 3"))))
   (is (= 7 ((from-string [x] "x + 3") 4)))
+  (is (= 7 ((from-string [_x] "_x + 3") 4)))
   (is (= 1 ((from-string [x] {:+ -} "x + 3") 4)))
   (is (= 7 ((from-string [] {:x 6 :+ +} "x + 1"))))
   (is (= 28.0 ((from-string [] "3 + 5**2"))))
