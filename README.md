@@ -1,7 +1,7 @@
 # Infix
 
 [![Build Status](https://github.com/rm-hull/infix/actions/workflows/clojure.yml/badge.svg)](https://github.com/rm-hull/infix/actions/workflows/clojure.yml)
-[![Coverage Status](https://coveralls.io/repos/rm-hull/infix/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/infix?branch=master)
+[![Coverage Status](https://coveralls.io/repos/rm-hull/infix/badge.svg?branch=main)](https://coveralls.io/r/rm-hull/infix?branch=main)
 [![Dependencies Status](https://versions.deps.co/rm-hull/infix/status.svg)](https://versions.deps.co/rm-hull/infix)
 [![Downloads](https://versions.deps.co/rm-hull/infix/downloads.svg)](https://versions.deps.co/rm-hull/infix)
 [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/infix.svg)](https://clojars.org/rm-hull/infix)
@@ -219,7 +219,7 @@ referenced in a subsequent function definition:
 ## EBNF Grammar Rules
 
 The `from-string` macro parses infix expressions based on the EBNF
-[grammar rules](https://github.com/rm-hull/infix/blob/master/src/infix/grammar.clj)
+[grammar rules](https://github.com/rm-hull/infix/blob/main/src/infix/grammar.clj)
 as follows:
 
 - _**&lt;expression&gt;** ::= term { addop term }._

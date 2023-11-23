@@ -18,7 +18,7 @@
       "LICENSE.md"
     ]
     :output-path "doc/api"
-    :source-uri "http://github.com/rm-hull/infix/blob/master/{filepath}#L{line}"
+    :source-uri "http://github.com/rm-hull/infix/blob/main/{filepath}#L{line}"
     :themes [:default [:google-analytics {:tracking-code "UA-39680853-6" }]]}
   :min-lein-version "2.8.1"
   :profiles {

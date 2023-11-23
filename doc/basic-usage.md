@@ -159,7 +159,7 @@ referenced in a subsequent function definition:
 ## EBNF Grammar Rules
 
 The `from-string` macro parses infix expressions based on the EBNF
-[grammar rules](https://github.com/rm-hull/infix/blob/master/src/infix/grammar.clj)
+[grammar rules](https://github.com/rm-hull/infix/blob/main/src/infix/grammar.clj)
 as follows:
 
 * _**&lt;expression&gt;** ::= term { addop term }._
