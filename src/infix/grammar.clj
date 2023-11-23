@@ -65,7 +65,7 @@
 
 (def envref
   (m/do*
-   (fst <- letter)
+   (fst <- (any-of letter (match "_")))
    (rst <- (token (many alpha-num)))
    (m/return (let [kw (keyword (strip-location (cons fst rst)))]
                (fn [env]
