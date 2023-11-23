@@ -10,3 +10,6 @@ pom.xml.asc
 .lein-failures
 .nrepl-port
 doc/api
+.clj-kondo
+.lsp
+.vscode
