@@ -158,9 +158,7 @@
    (symb ":")
    (no-exp <- expression)
    (m/return (fn [env]
-               (if (condition env) (yes-exp env) (no-exp env))))
-   )
-  )
+               (if (condition env) (yes-exp env) (no-exp env))))))
 
 (def base
   (any-of
