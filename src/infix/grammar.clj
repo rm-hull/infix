@@ -38,7 +38,7 @@
 ;
 ; function ::= envref expression | envref "(" <empty> | expression { "," expression } ")".
 ; ternary ::= expression "?" expression ":" expression.
-; envref ::= letter { letter | digit | "_" }.
+; envref ::= letter | "_" { letter | digit | "_" }.
 ; var ::= envref.
 ; boolean :: = "true" | "false"
 ; number ::= integer | decimal | rational | binary | hex
