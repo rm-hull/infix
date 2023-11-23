@@ -2,18 +2,20 @@ name: Clojure CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: lein deps
-    - name: Run tests
-      run: lein test
+      - name: Install dependencies
+        run: lein deps
+      - name: Run tests
+        run: lein with-profile +dev cloverage --coveralls
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          file: target/coverage/coveralls.json
