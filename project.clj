@@ -25,10 +25,10 @@
     :dev {
       :global-vars {*warn-on-reflection* true}
       :plugins [
-        [lein-codox "0.10.5"]
-        [lein-cljfmt "0.6.1"]
-        [lein-cloverage "1.0.13"]]
+        [lein-codox "0.10.8"]
+        [lein-cljfmt "0.9.2"]
+        [lein-cloverage "1.2.4"]]
       :dependencies [
-        [org.clojure/clojure "1.9.0"]
+        [org.clojure/clojure "1.11.1"]
         [google-analytics-codox-theme "0.1.0"]]}})
 
