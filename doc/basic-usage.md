@@ -174,7 +174,7 @@ as follows:
 
 * _**&lt;function&gt;** ::= envref expression | envref "(" &lt;empty&gt; | expression { "," expression } ")"._
 
-* _**&lt;envref&gt;** ::= letter { letter | digit | "_" }._
+* _**&lt;envref&gt;** ::= letter { letter | digit | "_" | "." }._
 
 * _**&lt;var&gt;** ::= envref._
 
