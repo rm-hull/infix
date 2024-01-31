@@ -43,12 +43,15 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
           path: "./doc/api"
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+        if: ${{ github.ref == 'refs/heads/main' }}
