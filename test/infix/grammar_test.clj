@@ -37,10 +37,11 @@
      (<= (Math/abs (- x y)) (* scale epsilon)))))
 
 (deftest check-var
-  (let [env {:x 32 :something_else 19}]
+  (let [env {:x 32 :something_else 19 :dot.var 608}]
     (is (thrown? ParseException (parse-all var "54")))
     (is (= 32 ((parse-all var "x") env)))
     (is (= 19 ((parse-all var "something_else") env)))
+    (is (= 608 ((parse-all var "dot.var") env)))
     (is (thrown? IllegalStateException ((parse-all var "fred") env)))))
 
 (deftest check-integer
@@ -110,12 +111,13 @@
     (is (thrown? clojure.lang.ArityException ((parse-all function "sqrt(7, 5)") env)))))
 
 (deftest check-expression
-  (let [env (merge base-env {:t 0.324 :x_y_z 3 :_a 4})]
+  (let [env (merge base-env {:t 0.324 :x_y_z 3 :_a 4 :_a.b 2})]
     (is (float= 1.4176457261295824 ((parse-all expression "sin(2 * t) + 3 * cos(4 * t)") env)))
     (is (thrown? IllegalStateException ((parse-all expression "3 + 4") {})))
     (is (= 43 ((parse-all expression "3 + 5 * 8") env)))
     (is (= 64 ((parse-all expression "(3 + 5) * 8") env)))
-    (is (= 10 ((parse-all expression "x_y_z * 2 + _a") env)))))
+    (is (= 10 ((parse-all expression "x_y_z * 2 + _a") env)))
+    (is (= 8 ((parse-all expression "x_y_z * 2 + _a / _a.b") env)))))
 
 (deftest check-ternary-op
   (let [env (merge base-env {:t 150 :x 10 :y 20})]

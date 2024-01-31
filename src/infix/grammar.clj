@@ -38,7 +38,7 @@
 ;
 ; function ::= envref expression | envref "(" <empty> | expression { "," expression } ")".
 ; ternary ::= expression "?" expression ":" expression.
-; envref ::= letter | "_" { letter | digit | "_" }.
+; envref ::= letter | "_" { letter | digit | "_"  | "." }.
 ; var ::= envref.
 ; boolean :: = "true" | "false"
 ; number ::= integer | decimal | rational | binary | hex
@@ -56,7 +56,7 @@
 ; TODO: allow unicode/utf8 characters
 (def letter (from-re #"[a-zA-Z]"))
 
-(def alpha-num (any-of letter digit (match "_")))
+(def alpha-num (any-of letter digit (match "_") (match ".")))
 
 (def digits
   (m/do*
@@ -65,7 +65,7 @@
 
 (def envref
   (m/do*
-   (fst <- (any-of letter (match "_")))
+   (fst <- (any-of letter (match "_") (match ".")))
    (rst <- (token (many alpha-num)))
    (m/return (let [kw (keyword (strip-location (cons fst rst)))]
                (fn [env]

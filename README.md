@@ -240,7 +240,7 @@ as follows:
 
 - _**&lt;ternary&gt;** ::= "(" expression ")" "?" expression ":" expression._
 
-- _**&lt;envref&gt;** ::= letter | "_" { letter | digit | "_" }.\_
+- _**&lt;envref&gt;** ::= letter | "_" { letter | digit | "_"  | "." }.\_
 
 - _**&lt;var&gt;** ::= envref._
 
