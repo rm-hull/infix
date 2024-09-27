@@ -116,6 +116,7 @@
     (is (thrown? IllegalStateException ((parse-all expression "3 + 4") {})))
     (is (= 43 ((parse-all expression "3 + 5 * 8") env)))
     (is (= 64 ((parse-all expression "(3 + 5) * 8") env)))
+    (is (= 65536.0 ((parse-all expression "2 ** 2 ** 2 ** 2") env)))
     (is (= 10 ((parse-all expression "x_y_z * 2 + _a") env)))
     (is (= 8 ((parse-all expression "x_y_z * 2 + _a / _a.b") env)))))
 

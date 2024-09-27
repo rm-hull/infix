@@ -80,7 +80,8 @@
 (deftest check-binary-precedence
   (let [x 4 y 3]
     (is (= 12   (infix x . y)))
-    (is (= 64.0 (infix x ** y)))))
+    (is (= 64.0 (infix x ** y)))
+    (is (= 65536.0 (infix 2 ** 2 ** 2 ** 2)))))
 
 (deftest check-from-string
   (is (= 5 ((from-string "5"))))
@@ -98,6 +99,7 @@
   (is (= 380175 ((from-string [t] "( t * (  t  >> 5 | t >>  8 ) ) >> ( t >> 16  )") 3425)))
   (is (= 0 ((from-string "(3-2)-1"))))
   (is (= 0 ((from-string "3 - 2 - 1"))))
+  (is (= 65536.0 ((from-string "2 ** 2 ** 2 ** 2"))))
   (is (= Double/POSITIVE_INFINITY ((from-string "divide(3, 0)"))))
   (is (= Double/NEGATIVE_INFINITY ((from-string "-3 ÷ 0"))))
   (is (= 5 ((from-string [t] "t - 2") 7)))

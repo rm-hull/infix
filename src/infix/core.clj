@@ -94,6 +94,9 @@
    'Math/sqrt 'Math/exp  'Math/log
    'Math/abs  'Math/signum])
 
+(def right-associative-operators
+  #{'Math/pow})
+
 (defn- bounded? [sym]
   (if-let [v (resolve sym)]
     (bound? v)
@@ -128,7 +131,9 @@
     (let [infix-expr (map resolve-alias infix-expr)]
       (loop [ops operator-precedence]
         (if-let [op (first ops)]
-          (let [idx (.lastIndexOf ^java.util.List infix-expr op)]
+          (let [idx (if (right-associative-operators op)
+                      (.indexOf ^java.util.List infix-expr op)
+                      (.lastIndexOf ^java.util.List infix-expr op))]
             (if (pos? idx)
               (let [[expr1 [op & expr2]] (split-at idx infix-expr)]
                 (list op (rewrite expr1) (rewrite expr2)))
