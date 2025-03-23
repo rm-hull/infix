@@ -3,24 +3,14 @@ name: Clojure CI
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
   workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - uses: actions/checkout@v4
@@ -52,6 +42,23 @@ jobs:
         uses: coverallsapp/github-action@v2
         with:
           file: target/coverage/coveralls.json
+
+  upload-api-docs:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Generate documentation
         run: lein codox
