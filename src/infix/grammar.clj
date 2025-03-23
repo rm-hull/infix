@@ -194,7 +194,7 @@
       (var-get v)
       v)))
 
-(defn- binary-reducer [op-parser arg-parser]
+(defn- left-associative-reducer [op-parser arg-parser]
   (m/do*
    (a1 <- arg-parser)
    (rst <- (many
@@ -210,8 +210,24 @@
        (resolve-var a1 env)
        rst)))))
 
-(def factor (binary-reducer expop base))
+(defn- right-associative-reducer [op-parser arg-parser]
+  (m/do*
+   (rst <- (many
+            (m/do*
+             spaces
+             (a <- arg-parser)
+             (op <- (token op-parser))
+             (m/return [a op]))))
+   (an <- arg-parser)
+   (m/return
+    (fn [env]
+      (reduce
+       (fn [acc [a op]] ((op env) (resolve-var a env) acc))
+       (resolve-var an env)
+       (reverse rst))))))
 
-(def term (binary-reducer mulop factor))
+(def factor (right-associative-reducer expop base))
 
-(def expression (binary-reducer addop term))
+(def term (left-associative-reducer mulop factor))
+
+(def expression (left-associative-reducer addop term))
