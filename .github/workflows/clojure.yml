@@ -18,8 +18,8 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: "temurin"
+          java-version: "21"
 
       - name: Install Leiningen
         run: |
@@ -47,7 +47,7 @@ jobs:
         run: lein codox
 
       - name: Upload API docs as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: api-docs
           path: ./doc/api
@@ -70,7 +70,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Download API docs artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: api-docs
           path: ./doc/api
