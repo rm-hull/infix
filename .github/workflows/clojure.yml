@@ -43,6 +43,15 @@ jobs:
         with:
           file: target/coverage/coveralls.json
 
+      - name: Generate documentation
+        run: lein codox
+
+      - name: Upload API docs as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: api-docs
+          path: ./doc/api
+
   upload-api-docs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -60,8 +69,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate documentation
-        run: lein codox
+      - name: Download API docs artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: api-docs
+          path: ./doc/api
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
