@@ -2,10 +2,9 @@
 
 [![Build Status](https://github.com/rm-hull/infix/actions/workflows/clojure.yml/badge.svg)](https://github.com/rm-hull/infix/actions/workflows/clojure.yml)
 [![Coverage Status](https://coveralls.io/repos/rm-hull/infix/badge.svg?branch=main)](https://coveralls.io/r/rm-hull/infix?branch=main)
-[![Dependencies Status](https://versions.deps.co/rm-hull/infix/status.svg)](https://versions.deps.co/rm-hull/infix)
 [![Downloads](https://versions.deps.co/rm-hull/infix/downloads.svg)](https://versions.deps.co/rm-hull/infix)
 [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/infix.svg)](https://clojars.org/rm-hull/infix)
-[![Maintenance](https://img.shields.io/maintenance/yes/2023.svg?maxAge=2592000)]()
+[![Maintenance](https://img.shields.io/maintenance/yes/2025.svg?maxAge=2592000)]()
 
 A small Clojure library for representing LISP expressions in infix
 rather than prefix notation... sometimes it's easier to rely on operator precedence,
