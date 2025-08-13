@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -67,7 +67,7 @@ jobs:
       group: "pages"
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Download API docs artifact
         uses: actions/download-artifact@v5
