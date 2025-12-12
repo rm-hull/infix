@@ -47,7 +47,7 @@ jobs:
         run: lein codox
 
       - name: Upload API docs as artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: api-docs
           path: ./doc/api
