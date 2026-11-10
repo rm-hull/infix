@@ -54,11 +54,13 @@
 
 (defn gcd [a b]
   (if (zero? b)
-    a
+    (clojure.core/abs a)
     (recur b (rem a b))))
 
 (defn lcm [a b]
-  (/ (* a b) (gcd a b)))
+  (if (and (zero? a) (zero? b))
+    0
+    (clojure.core/abs (/ (* a b) (gcd a b)))))
 
 (defn fact [n]
   (if (zero? n)
