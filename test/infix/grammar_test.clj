@@ -126,6 +126,19 @@
     (is (= -10 ((parse-all ternary-op "(t < 100) ? x + y : x - y") env)))
     (is (= 30 ((parse-all ternary-op "(sum(x, y) >= 30) ? sum(x, y) : 0") env)))))
 
+(deftest check-gcd-and-lcm-edge-cases
+  ;; gcd is always non-negative, even when both arguments are negative
+  (is (= 4 ((parse-all expression "gcd(8, 12)") base-env)))
+  (is (= 4 ((parse-all expression "gcd(-8, -12)") base-env)))
+  (is (= 4 ((parse-all expression "gcd(-8, 12)") base-env)))
+  (is (= 8 ((parse-all expression "gcd(8, 0)") base-env)))
+  (is (= 0 ((parse-all expression "gcd(0, 0)") base-env)))
+  ;; lcm is always non-negative and is defined (zero) for (0, 0)
+  (is (= 24 ((parse-all expression "lcm(8, 12)") base-env)))
+  (is (= 12 ((parse-all expression "lcm(-4, 6)") base-env)))
+  (is (= 0 ((parse-all expression "lcm(0, 5)") base-env)))
+  (is (= 0 ((parse-all expression "lcm(0, 0)") base-env))))
+
 (deftest check-baseenv-functions
   (is (= 16 ((parse-all expression "9 + 7") base-env)))
   (is (= 12 ((parse-all expression "19 - 7") base-env)))
